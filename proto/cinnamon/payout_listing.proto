@@ -7,7 +7,7 @@ option go_package = "./;proto";
 import "google/protobuf/empty.proto";
 
 message InstitutionsRequest {
-  string currency = 1;
+  string country = 1;
   string payment_method = 2;
 }
 
