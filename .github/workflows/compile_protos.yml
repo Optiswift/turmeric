@@ -24,6 +24,9 @@ jobs:
         with:
           task-version: 3.29.1
 
+      - name: Install Protobuf Compiler
+        run: sudo apt-get install -y protobuf-compiler
+
       - name: Install Task and Dependencies
         run: task
 
