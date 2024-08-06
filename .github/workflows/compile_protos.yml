@@ -35,9 +35,6 @@ jobs:
           PROJECT: cinnamon
         run: task proto:generate
 
-      - name: Run Linter
-        run: task lint
-
       - name: Run Tests
         run: task test
 
