@@ -1,0 +1,33 @@
+version: "3"
+
+tasks:
+  default:
+    desc: "Getting started"
+    cmds:
+      - task: install
+
+  install:
+    desc: "Install dependencies"
+    cmds:
+      - go mod download
+      - go install github.com/go-task/task/v3/cmd/task@latest
+      - go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.34.2
+      - go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
+      - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+      - go install github.com/lonnblad/gopuml/cmd/gopuml@v0.2.0
+
+  lint:
+    desc: "Run linter"
+    cmd: golangci-lint run ./...
+
+  proto:generate:
+    desc: "Generate proto server code for interfaces"
+    cmds:
+      - mkdir -p generated/{{.PROJECT}}
+      - protoc -I proto/ proto/{{.PROJECT}}/*.proto --go_out=generated/{{.PROJECT}} --go-grpc_out=generated/{{.PROJECT}}
+
+  test:
+    desc: "Run tests"
+    cmds:
+      - go test -v ./... -race -cover -timeout 30s -count 1 -coverprofile=coverage.out
+      - go tool cover -html=coverage.out -o coverage.html

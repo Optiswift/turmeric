@@ -1,0 +1,51 @@
+name: Compile and Commit Protobuf Files
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.22'
+
+      - name: Setup Task
+        uses: pnorton5432/setup-task@v1
+        with:
+          task-version: 3.29.1
+
+      - name: Install Task and Dependencies
+        run: task
+
+      - name: Generate gRPC Code
+        env:
+          PROJECT: cinnamon
+        run: task proto:generate
+
+      - name: Run Linter
+        run: task lint
+
+      - name: Run Tests
+        run: task test
+
+      - uses: benjlevesque/short-sha@v3.0
+        id: short-sha
+        with:
+          length: 6
+
+      - name: Commit generated code
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update generated ${{ steps.short-sha.outputs.sha }}
+          file_pattern: generated/**
+          tagging_message: ${{ steps.short-sha.outputs.sha }}

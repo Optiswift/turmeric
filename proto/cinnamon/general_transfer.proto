@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package optiswift.proto;
+
+option go_package = "./;proto";
+
+import "google/protobuf/timestamp.proto";
+
+enum TransferStatus {
+  QUEUED = 0;
+  PROCESSING = 1;
+  SUCCESS = 2;
+  FAILED = 3;
+}
+
+message BeneficiaryDetails {
+  string account_id = 1;
+  string account_name = 2;
+  string institution_id = 3;
+  string country = 4;
+  string payment_method = 5;
+}
+
+message User {
+  string name = 1;
+  string id = 2;
+}
+
+message GeneralTransferRequest {
+  string id = 1;
+  double amount = 2;
+  string base_currency = 3;
+  string narration = 5;
+  BeneficiaryDetails beneficiary_details = 7;
+  string name_inquiry_reference = 8;
+  map<string, string> extraFields = 9;
+  double rate = 10;
+  User userData = 11;
+}
+
+message GeneralTransferResponse {
+  TransferStatus status = 1;
+  string reference = 2;
+  google.protobuf.Timestamp date = 3;
+  float fee = 4;
+  string provider_id = 5;
+}
+
+service GeneralTransfer {
+  rpc Transfer(GeneralTransferRequest) returns (GeneralTransferResponse);
+}
