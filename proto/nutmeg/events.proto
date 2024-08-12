@@ -76,7 +76,7 @@ message TopupTransaction {
   string provider = 9;
 }
 
-message InternalTransfer {
+message InternalTransferTransaction {
   string id = 1;
   double amount = 2;
   string base_currency = 3;
@@ -92,5 +92,5 @@ service Events {
   rpc UserCreated(User) returns (LoyaltyResponse);
   rpc Payout(PayoutTransaction) returns (LoyaltyResponse);
   rpc Topup(TopupTransaction) returns (LoyaltyResponse);
-  rpc InternalTransfer(InternalTransfer) returns (LoyaltyResponse);
+  rpc InternalTransfer(InternalTransferTransaction) returns (LoyaltyResponse);
 }
