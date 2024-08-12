@@ -9,7 +9,7 @@ on:
 jobs:
   generate_matrix:
     runs-on: ubuntu-latest
-    name: Scan affected stacks 📡
+    name: Scan affected projects 📡
     outputs:
       matrix: "${{ steps.generate_matrix.outputs.matrix }}"
     steps:
@@ -39,7 +39,7 @@ jobs:
         id: generate_matrix
         uses: ./.github/actions/matrix
         with:
-          filter: proto\/([^\/]+)\/*.proto
+          filter: proto\/([^\/]+)\/.+\.proto
           default-to-all: true
 
   build:
