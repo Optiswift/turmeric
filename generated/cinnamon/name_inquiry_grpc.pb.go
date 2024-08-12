@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	NameInquiry_Lookup_FullMethodName = "/optiswift.proto.NameInquiry/Lookup"
+	NameInquiry_Lookup_FullMethodName = "/optiswift.proto.cinnamon.NameInquiry/Lookup"
 )
 
 // NameInquiryClient is the client API for NameInquiry service.
@@ -108,7 +108,7 @@ func _NameInquiry_Lookup_Handler(srv interface{}, ctx context.Context, dec func(
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var NameInquiry_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "optiswift.proto.NameInquiry",
+	ServiceName: "optiswift.proto.cinnamon.NameInquiry",
 	HandlerType: (*NameInquiryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

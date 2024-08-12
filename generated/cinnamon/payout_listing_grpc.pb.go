@@ -20,8 +20,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PayoutListing_Institutions_FullMethodName  = "/optiswift.proto.PayoutListing/Institutions"
-	PayoutListing_PayoutMethods_FullMethodName = "/optiswift.proto.PayoutListing/PayoutMethods"
+	PayoutListing_Institutions_FullMethodName  = "/optiswift.proto.cinnamon.PayoutListing/Institutions"
+	PayoutListing_PayoutMethods_FullMethodName = "/optiswift.proto.cinnamon.PayoutListing/PayoutMethods"
 )
 
 // PayoutListingClient is the client API for PayoutListing service.
@@ -143,7 +143,7 @@ func _PayoutListing_PayoutMethods_Handler(srv interface{}, ctx context.Context, 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PayoutListing_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "optiswift.proto.PayoutListing",
+	ServiceName: "optiswift.proto.cinnamon.PayoutListing",
 	HandlerType: (*PayoutListingServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

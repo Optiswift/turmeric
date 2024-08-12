@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	GeneralTransfer_Transfer_FullMethodName = "/optiswift.proto.GeneralTransfer/Transfer"
+	GeneralTransfer_Transfer_FullMethodName = "/optiswift.proto.cinnamon.GeneralTransfer/Transfer"
 )
 
 // GeneralTransferClient is the client API for GeneralTransfer service.
@@ -108,7 +108,7 @@ func _GeneralTransfer_Transfer_Handler(srv interface{}, ctx context.Context, dec
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var GeneralTransfer_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "optiswift.proto.GeneralTransfer",
+	ServiceName: "optiswift.proto.cinnamon.GeneralTransfer",
 	HandlerType: (*GeneralTransferServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
