@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package optiswift.proto;
+package optiswift.proto.cinnamon;
 
 option go_package = "./;proto";
 

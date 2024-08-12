@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package optiswift.proto.nutmeg;
+
+option go_package = "./;proto";
+
+enum TransferStatus {
+  QUEUED = 0;
+  PROCESSING = 1;
+  SUCCESS = 2;
+  FAILED = 3;
+}
+
+enum BenefitType {
+  CASHBACK = 0;
+  REFERRAL = 1;
+  DISCOUNT = 2;
+  POINTS = 3;
+  OTHER = 4;
+}
+
+message User {
+  string name = 1;
+  string id = 2;
+  string referer_id = 3;
+  string transaction_count_to_date = 4;
+  string transaction_amount_to_date = 5;
+}
+
+message PayoutBeneficiary {
+  string account_id = 1;
+  string account_name = 2;
+  string institution_id = 3;
+  string country = 4;
+  string payment_method = 5;
+}
+
+message LoyaltyResponse {
+  repeated Benefit benefits = 1;
+}
+
+message Benefit {
+  BenefitType type = 1;
+  double amount = 2;
+  string description = 3;
+}
+
+message TopupInitiator {
+  string account_id = 1;
+  string account_name = 2;
+  string institution_id = 3;
+  string country = 4;
+}
+
+message PayoutTransaction {
+  string id = 1;
+  double amount = 2;
+  string currency = 3;
+  string narration = 4;
+  PayoutBeneficiary beneficiary = 5;
+  double rate = 6;
+  double fee = 7;
+  User sender = 8;
+  string provider = 9;
+}
+
+message TopupTransaction {
+  string id = 1;
+  double amount = 2;
+  string currency = 3;
+  string narration = 4;
+  TopupInitiator initiator = 5;
+  double rate = 6;
+  double fee = 7;
+  User beneficiary = 8;
+  string provider = 9;
+}
+
+message InternalTransfer {
+  string id = 1;
+  double amount = 2;
+  string base_currency = 3;
+  string quote_currency = 4;
+  string narration = 5;
+  double rate = 6;
+  double fee = 7;
+  User sender = 8;
+  User beneficiary = 9;
+}
+
+service Events {
+  rpc UserCreated(User) returns (LoyaltyResponse);
+  rpc Payout(PayoutTransaction) returns (LoyaltyResponse);
+  rpc Topup(TopupTransaction) returns (LoyaltyResponse);
+  rpc InternalTransfer(InternalTransfer) returns (LoyaltyResponse);
+}
