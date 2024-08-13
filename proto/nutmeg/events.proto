@@ -62,6 +62,7 @@ message PayoutTransaction {
   double fee = 7;
   User sender = 8;
   string provider = 9;
+  TransferStatus status = 10;
 }
 
 message TopupTransaction {
@@ -74,6 +75,7 @@ message TopupTransaction {
   double fee = 7;
   User beneficiary = 8;
   string provider = 9;
+  TransferStatus status = 10;
 }
 
 message InternalTransferTransaction {
@@ -86,6 +88,7 @@ message InternalTransferTransaction {
   double fee = 7;
   User sender = 8;
   User beneficiary = 9;
+  TransferStatus status = 10;
 }
 
 service Events {
