@@ -23,8 +23,8 @@ message User {
   string name = 1;
   string id = 2;
   string referer_id = 3;
-  string transaction_count_to_date = 4;
-  string transaction_amount_to_date = 5;
+  int32 transaction_count_to_date = 4;
+  double transaction_amount_to_date = 5;
 }
 
 message PayoutBeneficiary {
