@@ -16,7 +16,7 @@ update_package_json() {
 
   # Add or update the export path for the project with both js and ts
   jq --arg project "$project" --arg import_path "$exports_import_path" --arg types_path "$exports_types_path" \
-    '.exports += {("./" + $project): {"import": $import_path, "types": $types_path}}' \
+    '.exports += {("./" + $project): {"import": $import_path, "require": $import_path, "types": $types_path}}' \
     $PACKAGE_JSON > temp.json && mv temp.json $PACKAGE_JSON
 
   # Add or update the typesVersions path for the project
