@@ -3,8 +3,10 @@ name: Build and Package Node.js gRPC Client Library
 on:
   push:
     branches:
-      - main
-      - master
+      - feature/js-proto-publishing
+
+permissions:
+  id-token: write
 
 jobs:
   build:

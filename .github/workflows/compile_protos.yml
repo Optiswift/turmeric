@@ -40,7 +40,7 @@ jobs:
         uses: ./.github/actions/matrix
         with:
           filter: proto\/([^\/]+)\/.+\.proto
-#          default-to-all: true
+          default-to-all: true
 
   build:
     name: Build Registry " ⛓ ${{ matrix.project }} 💈"
