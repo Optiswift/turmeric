@@ -50,6 +50,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           registry: "https://npm.pkg.github.com"
           access: restricted
-          provenance: true
           tag: ${{ steps.short-sha.outputs.sha }}
           package: lib/js
