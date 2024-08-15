@@ -11,12 +11,12 @@ clean_src_directory() {
 update_package_json() {
   local project=$1
   local exports_import_path="./src/$project/index.js"
-  local exports_types_path="./src/$project/index.ts"
+  local exports_types_path="./src/$project/index.d.ts"
   local types_version_path="src/$project/index.d.ts"
 
   # Add or update the export path for the project with both js and ts
   jq --arg project "$project" --arg import_path "$exports_import_path" --arg types_path "$exports_types_path" \
-    '.exports += {("./" + $project): {"import": $import_path, "require": $import_path, "types": $types_path}}' \
+    '.exports += {("./" + $project): {"import": $import_path, "types": $types_path}}' \
     $PACKAGE_JSON > temp.json && mv temp.json $PACKAGE_JSON
 
   # Add or update the typesVersions path for the project
@@ -44,8 +44,8 @@ generate_index_js() {
 }
 
 
-# Generate index.ts for a project
-generate_index_ts() {
+# Generate index.d.ts for a project
+generate_index_dts() {
   local project_dir=$1
 
   echo "Generating index.ts for $(basename $project_dir)"
@@ -55,7 +55,7 @@ generate_index_ts() {
       file_basename=$(basename $file .d.ts)
       echo "export * from './$file_basename';"
     done
-  } > "$project_dir/index.ts"
+  } > "$project_dir/index.d.ts"
 }
 
 clean_src_directory
@@ -75,7 +75,7 @@ do
     -I ./proto/$project ./proto/$project/*.proto;
 
   generate_index_js "$DEST"
-  generate_index_ts "$DEST"
+  generate_index_dts "$DEST"
 
   # Update package.json exports
   update_package_json "$project"
