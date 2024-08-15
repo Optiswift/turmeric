@@ -5,8 +5,8 @@ on:
     branches:
       - main
       - master
-    paths:
-      - "*.proto"
+#    paths:
+#      - "*.proto"
 
 permissions:
   attestations: write
@@ -42,10 +42,6 @@ jobs:
         id: short-sha
         with:
           length: 6
-
-      - name: Install Dependencies
-        run: npm ci
-        working-directory: lib/js
 
       - name: Bump pre-release version
         run: |
