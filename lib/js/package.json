@@ -1,0 +1,30 @@
+{
+  "name": "@optiswift/turmeric",
+  "version": "0.0.1",
+  "description": " @optiswift/turmeric",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/optiswift/turmeric.git"
+  },
+  "author": "Emmanuel Sarpong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/optiswift/turmeric/issues"
+  },
+  "homepage": "https://github.com/optiswift/turmeric#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.11.1",
+    "@types/node": "^22.3.0"
+  },
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ]
+}

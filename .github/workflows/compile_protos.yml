@@ -82,7 +82,8 @@ jobs:
       - name: Run Tests
         run: task test
 
-      - uses: benjlevesque/short-sha@v3.0
+      - name: Commit SHA
+        uses: benjlevesque/short-sha@v3.0
         id: short-sha
         with:
           length: 6
