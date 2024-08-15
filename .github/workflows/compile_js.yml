@@ -1,4 +1,4 @@
-name: Build and Package Node.js gRPC Client Library
+name: Publish Node.js gRPC Library
 
 on:
   push:
@@ -6,11 +6,14 @@ on:
       - feature/js-proto-publishing
 
 permissions:
+  attestations: write
+  contents: read
   id-token: write
+  packages: write
 
 jobs:
   build:
-    name: Build and Package Node.js gRPC Client Library " ⛓ ${{ matrix.project }} 💈"
+    name: Publish Node.js gRPC Library
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
