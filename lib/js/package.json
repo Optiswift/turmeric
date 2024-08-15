@@ -19,7 +19,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@grpc/grpc-js": "^1.11.1",
     "@types/node": "^22.3.0"
   },
