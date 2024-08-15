@@ -44,6 +44,11 @@ jobs:
         run: npm ci
         working-directory: lib/js
 
+      - name: Bump pre-release version
+        run: |
+          npm version prerelease --preid=rc-${{ github.run_number }}
+        working-directory: lib/js
+
       - name: Publish to npm
         uses: JS-DevTools/npm-publish@v3
         with:
