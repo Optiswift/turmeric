@@ -19,6 +19,9 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
+  "dependencies": {
+    "google-protobuf": "^3.21.4"
+  },
   "peerDependencies": {
     "@grpc/grpc-js": "^1.11.1"
   },
