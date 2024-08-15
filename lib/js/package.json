@@ -1,6 +1,6 @@
 {
   "name": "@optiswift/turmeric",
-  "version": "0.0.1",
+  "version": "0.0.1-rc-1",
   "description": " @optiswift/turmeric",
   "main": "index.js",
   "scripts": {
