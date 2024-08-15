@@ -3,7 +3,10 @@ name: Publish Node.js gRPC Library
 on:
   push:
     branches:
-      - feature/js-proto-publishing
+      - main
+      - master
+    paths:
+      - "*.proto"
 
 permissions:
   attestations: write
