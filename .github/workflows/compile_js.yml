@@ -29,19 +29,15 @@ jobs:
       - name: Generate gRPC Code
         run: ./scripts/build_nodejs.sh
 
-      - name: Install Dependencies
-        run: npm ci
-        working-directory: lib/js
-
-      - name: Package Library
-        run: npm pack
-        working-directory: lib/js
-
       - name: Commit SHA
         uses: benjlevesque/short-sha@v3.0
         id: short-sha
         with:
           length: 6
+
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: lib/js
 
       - name: Publish to npm
         uses: JS-DevTools/npm-publish@v3
@@ -51,3 +47,4 @@ jobs:
           access: public
           provenance: true
           tag: ${{ steps.short-sha.outputs.sha }}
+          package: lib/js
