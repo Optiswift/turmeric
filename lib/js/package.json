@@ -20,8 +20,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
-    "@grpc/grpc-js": "^1.11.1",
-    "@types/node": "^22.3.0"
+    "@grpc/grpc-js": "^1.11.1"
   },
   "files": [
     "src/**/*.js",
