@@ -26,9 +26,8 @@ message PayoutMethodsResponse {
 }
 
 message PayoutMethod {
-  string id = 1;
-  string name = 2;
-  string logo = 3;
+  string country = 1;
+  string payment_method = 2;
   PayoutForms forms = 4;
 }
 
