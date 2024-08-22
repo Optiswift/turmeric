@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.12.4
-// source: cinnamon/name_inquiry.proto
+// source: name_inquiry.proto
 
 package proto
 
@@ -117,5 +117,5 @@ var NameInquiry_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "cinnamon/name_inquiry.proto",
+	Metadata: "name_inquiry.proto",
 }

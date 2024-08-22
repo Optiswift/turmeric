@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.12.4
-// source: cinnamon/general_transfer.proto
+// source: general_transfer.proto
 
 package proto
 
@@ -117,5 +117,5 @@ var GeneralTransfer_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "cinnamon/general_transfer.proto",
+	Metadata: "general_transfer.proto",
 }
