@@ -8,7 +8,7 @@ import "google/protobuf/empty.proto";
 
 message InstitutionsRequest {
   string country = 1;
-  string payment_method = 2;
+  string payout_method = 2;
 }
 
 message InstitutionsResponse {
@@ -22,25 +22,26 @@ message Institution {
 }
 
 message PayoutMethodsResponse {
-  repeated PayoutMethod payment_methods = 1;
+  repeated PayoutMethod payout_methods = 1;
 }
 
 message PayoutMethod {
   string country = 1;
-  string payment_method = 2;
+  string payout_method = 2;
   PayoutForms forms = 4;
 }
 
 message PayoutForms {
   FormField institution = 1;
   FormField identifier = 2;
-  repeated ExtraFormField extraFields = 3;
+  repeated ExtraFormField extra_fields = 3;
 }
 
 message FormField {
   bool visible = 1;
   bool lookup = 2;
   string label = 3;
+  int32 limit_length = 4;
 }
 
 message ExtraFormField {
