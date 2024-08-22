@@ -1,0 +1,59 @@
+name: Publish goLang gRPC Library
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    name: Build Registry " ⛓ ${{ matrix.project }} 💈"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.22'
+
+      - name: Setup Task
+        uses: pnorton5432/setup-task@v1
+        with:
+          task-version: 3.29.1
+
+      - name: Install Protobuf Compiler
+        run: sudo apt-get install -y protobuf-compiler
+
+      - name: Install Task and Dependencies
+        run: task
+
+      - name: Generate gRPC Code
+        env:
+          PROJECT: ${{ matrix.project }}
+        run: |
+          for project in $(ls ./proto); \
+          do
+            PROJECT=$project task proto:generate
+          done
+
+      - name: Run Linter
+        run: task lint
+
+      - name: Run Tests
+        run: task test
+
+      - name: Commit SHA
+        uses: benjlevesque/short-sha@v3.0
+        id: short-sha
+        with:
+          length: 6
+
+      - name: Commit generated code
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update generated ${{ steps.short-sha.outputs.sha }}
+          file_pattern: generated/**
+          tagging_message: ${{ steps.short-sha.outputs.sha }}
