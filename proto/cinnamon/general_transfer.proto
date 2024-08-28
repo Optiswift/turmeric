@@ -22,8 +22,30 @@ message BeneficiaryDetails {
 }
 
 message User {
-  string name = 1;
-  string id = 2;
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string middle_name = 4;
+  string gender = 5;
+  google.protobuf.Timestamp date_of_birth = 6;
+  UserAddress postal_address = 7;
+  UserIdDocument id_document = 8;
+}
+
+message UserAddress {
+  string city = 1;
+  string state = 2;
+  string country = 3;
+  string postal_code = 4;
+  string street = 5;
+}
+
+message UserIdDocument {
+  string type = 1;
+  string number = 2;
+  string issue_date = 3;
+  string expiry_date = 4;
+  string country = 5;
 }
 
 message GeneralTransferRequest {
