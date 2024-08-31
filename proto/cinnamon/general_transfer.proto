@@ -55,9 +55,9 @@ message GeneralTransferRequest {
   string narration = 5;
   BeneficiaryDetails beneficiary_details = 7;
   string name_inquiry_reference = 8;
-  map<string, string> extraFields = 9;
+  map<string, string> extra_fields = 9;
   double rate = 10;
-  User userData = 11;
+  User user_data = 11;
 }
 
 message GeneralTransferResponse {
