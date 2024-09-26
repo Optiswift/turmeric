@@ -44,9 +44,16 @@ message FormField {
   int32 limit_length = 4;
 }
 
+enum ExtraFormFieldType {
+  TEXT = 0;
+  DROPDOWN = 1;
+}
+
 message ExtraFormField {
   string id = 1;
   string label = 2;
+  ExtraFormFieldType type = 3;
+  repeated string options = 4;
 }
 
 service PayoutListing {
