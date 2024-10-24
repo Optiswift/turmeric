@@ -8,7 +8,6 @@ package proto
 
 import (
 	context "context"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -29,7 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PayoutListingClient interface {
 	Institutions(ctx context.Context, in *InstitutionsRequest, opts ...grpc.CallOption) (*InstitutionsResponse, error)
-	PayoutMethods(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*PayoutMethodsResponse, error)
+	PayoutMethods(ctx context.Context, in *PayoutMethodsRequest, opts ...grpc.CallOption) (*PayoutMethodsResponse, error)
 }
 
 type payoutListingClient struct {
@@ -50,7 +49,7 @@ func (c *payoutListingClient) Institutions(ctx context.Context, in *Institutions
 	return out, nil
 }
 
-func (c *payoutListingClient) PayoutMethods(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*PayoutMethodsResponse, error) {
+func (c *payoutListingClient) PayoutMethods(ctx context.Context, in *PayoutMethodsRequest, opts ...grpc.CallOption) (*PayoutMethodsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PayoutMethodsResponse)
 	err := c.cc.Invoke(ctx, PayoutListing_PayoutMethods_FullMethodName, in, out, cOpts...)
@@ -65,7 +64,7 @@ func (c *payoutListingClient) PayoutMethods(ctx context.Context, in *empty.Empty
 // for forward compatibility.
 type PayoutListingServer interface {
 	Institutions(context.Context, *InstitutionsRequest) (*InstitutionsResponse, error)
-	PayoutMethods(context.Context, *empty.Empty) (*PayoutMethodsResponse, error)
+	PayoutMethods(context.Context, *PayoutMethodsRequest) (*PayoutMethodsResponse, error)
 	mustEmbedUnimplementedPayoutListingServer()
 }
 
@@ -79,7 +78,7 @@ type UnimplementedPayoutListingServer struct{}
 func (UnimplementedPayoutListingServer) Institutions(context.Context, *InstitutionsRequest) (*InstitutionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Institutions not implemented")
 }
-func (UnimplementedPayoutListingServer) PayoutMethods(context.Context, *empty.Empty) (*PayoutMethodsResponse, error) {
+func (UnimplementedPayoutListingServer) PayoutMethods(context.Context, *PayoutMethodsRequest) (*PayoutMethodsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PayoutMethods not implemented")
 }
 func (UnimplementedPayoutListingServer) mustEmbedUnimplementedPayoutListingServer() {}
@@ -122,7 +121,7 @@ func _PayoutListing_Institutions_Handler(srv interface{}, ctx context.Context, d
 }
 
 func _PayoutListing_PayoutMethods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(empty.Empty)
+	in := new(PayoutMethodsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -134,7 +133,7 @@ func _PayoutListing_PayoutMethods_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: PayoutListing_PayoutMethods_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PayoutListingServer).PayoutMethods(ctx, req.(*empty.Empty))
+		return srv.(PayoutListingServer).PayoutMethods(ctx, req.(*PayoutMethodsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
