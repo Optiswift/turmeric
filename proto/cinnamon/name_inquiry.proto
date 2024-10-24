@@ -9,6 +9,7 @@ message NameInquiryRequest {
   string account_id = 2;
   string country = 3;
   string payment_method = 4;
+  optional string user_id = 5;
 }
 
 message NameInquiryResponse {

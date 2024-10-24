@@ -4,11 +4,14 @@ package optiswift.proto.cinnamon;
 
 option go_package = "./;proto";
 
-import "google/protobuf/empty.proto";
-
 message InstitutionsRequest {
   string country = 1;
   string payout_method = 2;
+  optional string user_id = 3;
+}
+
+message PayoutMethodsRequest {
+  optional string user_id = 1;
 }
 
 message InstitutionsResponse {
@@ -58,5 +61,5 @@ message ExtraFormField {
 
 service PayoutListing {
   rpc Institutions(InstitutionsRequest) returns (InstitutionsResponse);
-  rpc PayoutMethods(google.protobuf.Empty) returns (PayoutMethodsResponse);
+  rpc PayoutMethods(PayoutMethodsRequest) returns (PayoutMethodsResponse);
 }
