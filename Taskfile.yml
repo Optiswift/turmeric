@@ -24,7 +24,7 @@ tasks:
     desc: "Generate proto server code for interfaces"
     cmds:
       - mkdir -p generated/{{.PROJECT}}
-      - protoc -I proto/{{.PROJECT}} proto/{{.PROJECT}}/*.proto --go_out=generated/{{.PROJECT}} --go-grpc_out=generated/{{.PROJECT}}
+      - protoc --experimental_allow_proto3_optional -I proto/{{.PROJECT}} proto/{{.PROJECT}}/*.proto --go_out=generated/{{.PROJECT}} --go-grpc_out=generated/{{.PROJECT}}
 
   test:
     desc: "Run tests"
