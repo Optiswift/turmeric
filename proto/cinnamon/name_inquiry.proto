@@ -14,7 +14,7 @@ message NameInquiryRequest {
   optional string sender_firstname = 6;
   optional string sender_lastname = 7;
   optional string account_name = 8;
-  map<string, string> extra_fields = 9;
+  optional string branch_code = 9;
 }
 
 message NameInquiryResponse {
