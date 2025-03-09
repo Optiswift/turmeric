@@ -5,7 +5,7 @@ package optiswift.proto.nutmeg;
 option go_package = "./;proto";
 
 
-message RewardLog {
+message RewardSummary {
   string reference = 1;
   string description = 2;
   string reward_type = 3;
@@ -13,14 +13,14 @@ message RewardLog {
 }
 
 
-message RewardRequest {
-  repeated string reference = 1;
+message FetchRewardSummaryRequest {
+  repeated string references = 1;
 }
 
-message RewardResponse {
-  repeated RewardLog rewards = 1;
+message FetchRewardSummaryResponse {
+  repeated RewardSummary rewards = 1;
 }
 
 service Rewards {
-  rpc FetchRewards(RewardRequest) returns (RewardResponse);
+  rpc FetchRewardSummary(FetchRewardSummaryRequest) returns (FetchRewardSummaryResponse);
 }
