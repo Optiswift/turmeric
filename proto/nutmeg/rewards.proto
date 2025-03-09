@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package optiswift.proto.nutmeg;
+
+option go_package = "./;proto";
+
+
+message Reward {
+  repeated string references = 1;
+}
+
+
+message RewardRequest {
+  repeated string references = 1;
+}
+
+message RewardResponse {
+  repeated Reward rewards = 1;
+}
+
+service Rewards {
+  rpc FetchRewards(RewardRequest) returns (RewardResponse);
+}
