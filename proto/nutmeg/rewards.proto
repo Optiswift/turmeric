@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "events.proto";
 
 package optiswift.proto.nutmeg;
 
@@ -7,9 +8,7 @@ option go_package = "./;proto";
 
 message RewardSummary {
   string reference = 1;
-  string description = 2;
-  string reward_type = 3;
-  float reward_amount = 4;
+  Benefit benefit = 2;
 }
 
 
