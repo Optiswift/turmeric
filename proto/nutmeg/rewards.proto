@@ -5,12 +5,11 @@ package optiswift.proto.nutmeg;
 
 option go_package = "./;proto";
 
-
+// Represents a reward rule with its benefits
 message RewardSummary {
   string reference = 1;
-  Benefit benefit = 2;
+  repeated Benefit benefits = 2;
 }
-
 
 message FetchRewardSummaryRequest {
   repeated string references = 1;
