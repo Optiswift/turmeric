@@ -14,7 +14,7 @@ enum EventType {
 
 message BuildRulesRequest {
   int32 number_of_people = 1;
-  int32 amount = 2;
+  double amount = 2;
   string currency = 3;
   EventType event_type = 4;
   int32 benefit_amount = 5;
