@@ -63,6 +63,7 @@ message PayoutTransaction {
   User sender = 8;
   string provider = 9;
   TransferStatus status = 10;
+  int32 number_of_people = 11;
 }
 
 message TopupTransaction {
