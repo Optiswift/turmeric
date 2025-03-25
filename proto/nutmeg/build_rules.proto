@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "events.proto";
 
 package optiswift.proto.nutmeg;
 
@@ -19,7 +20,7 @@ message BuildRulesRequest {
   int32 benefit_amount = 5;
   string benefit_description = 6;
   string name = 7;
-  string benefit_type = 8;
+  BenefitType benefit_type = 8;
 }
 
 message BooleanResponse {
