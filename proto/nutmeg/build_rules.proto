@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package optiswift.proto.nutmeg;
+
+option go_package = "./;proto";
+
+enum EventType {
+  PAYOUT = 0;
+  TOPUP = 1;
+  USER_CREATED = 2;
+  INTERNAL_TRANSFER = 3;
+}
+
+message BuildRulesRequest {
+  int32 number_of_people = 1;
+  int32 amount = 2;
+  string currency = 3;
+  EventType event_type = 4;
+  int32 benefit_amount = 5;
+  string benefit_description = 6;
+  string name = 7;
+}
+
+message BooleanResponse {
+  bool success = 1;
+}
+
+service BuildRuleService {
+  rpc CreateBuildRule(BuildRulesRequest) returns (BooleanResponse);
+}
