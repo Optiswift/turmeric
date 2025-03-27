@@ -7,7 +7,7 @@ option go_package = "./;proto";
 
 message CelRuleFact {
   oneof event_data {
-    UserCreatedEvent user = 1;
+    User user = 1;
     PayoutTransaction payout = 2;
     TopupTransaction topup = 3;
     InternalTransferTransaction internal_transfer = 4;
