@@ -1,5 +1,4 @@
 syntax = "proto3";
-
 package optiswift.proto.nutmeg;
 
 option go_package = "./;proto";
@@ -92,8 +91,17 @@ message InternalTransferTransaction {
   TransferStatus status = 10;
 }
 
+message UserCreatedEvent {
+  string user_id = 1;
+  string referer_id = 2;
+}
+
+message BooleanResponse {
+  bool success = 1;
+}
+
 service Events {
-  rpc UserCreated(User) returns (LoyaltyResponse);
+  rpc UserCreated(UserCreatedEvent) returns (BooleanResponse);
   rpc Payout(PayoutTransaction) returns (LoyaltyResponse);
   rpc Topup(TopupTransaction) returns (LoyaltyResponse);
   rpc InternalTransfer(InternalTransferTransaction) returns (LoyaltyResponse);
