@@ -13,14 +13,13 @@ enum EventType {
 }
 
 message BuildRulesRequest {
-  int32 number_of_people = 1;
-  double amount = 2;
-  string currency = 3;
-  EventType event_type = 4;
-  int32 benefit_amount = 5;
-  string benefit_description = 6;
-  string name = 7;
-  BenefitType benefit_type = 8;
+  double amount = 1;
+  string currency = 2;
+  EventType event_type = 3;
+  int32 benefit_amount = 4;
+  string benefit_description = 5;
+  string name = 6;
+  BenefitType benefit_type = 7;
 }
 
 message BooleanResponse {
