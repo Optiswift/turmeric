@@ -23,9 +23,6 @@ message BuildRulesRequest {
   BenefitType benefit_type = 8;
 }
 
-message BooleanResponse {
-  bool success = 1;
-}
 
 service BuildRuleService {
   rpc CreateBuildRule(BuildRulesRequest) returns (BooleanResponse);
