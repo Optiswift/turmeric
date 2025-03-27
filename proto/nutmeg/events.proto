@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package optiswift.proto.nutmeg;
 
 option go_package = "./;proto";
@@ -16,6 +17,11 @@ enum BenefitType {
   DISCOUNT = 2;
   POINTS = 3;
   OTHER = 4;
+}
+
+enum ReferralStatus {
+  PENDING = 0;
+  COMPLETED = 1;
 }
 
 message User {
@@ -62,7 +68,7 @@ message PayoutTransaction {
   User sender = 8;
   string provider = 9;
   TransferStatus status = 10;
-  int32 number_of_people = 11;
+  ReferralStatus referral_status = 11;
 }
 
 message TopupTransaction {
@@ -91,17 +97,8 @@ message InternalTransferTransaction {
   TransferStatus status = 10;
 }
 
-message UserCreatedEvent {
-  string user_id = 1;
-  string referer_id = 2;
-}
-
-message BooleanResponse {
-  bool success = 1;
-}
-
 service Events {
-  rpc UserCreated(UserCreatedEvent) returns (BooleanResponse);
+  rpc UserCreated(User) returns (LoyaltyResponse);
   rpc Payout(PayoutTransaction) returns (LoyaltyResponse);
   rpc Topup(TopupTransaction) returns (LoyaltyResponse);
   rpc InternalTransfer(InternalTransferTransaction) returns (LoyaltyResponse);

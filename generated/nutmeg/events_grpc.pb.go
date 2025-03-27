@@ -29,7 +29,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EventsClient interface {
-	UserCreated(ctx context.Context, in *UserCreatedEvent, opts ...grpc.CallOption) (*BooleanResponse, error)
+	UserCreated(ctx context.Context, in *User, opts ...grpc.CallOption) (*LoyaltyResponse, error)
 	Payout(ctx context.Context, in *PayoutTransaction, opts ...grpc.CallOption) (*LoyaltyResponse, error)
 	Topup(ctx context.Context, in *TopupTransaction, opts ...grpc.CallOption) (*LoyaltyResponse, error)
 	InternalTransfer(ctx context.Context, in *InternalTransferTransaction, opts ...grpc.CallOption) (*LoyaltyResponse, error)
@@ -43,9 +43,9 @@ func NewEventsClient(cc grpc.ClientConnInterface) EventsClient {
 	return &eventsClient{cc}
 }
 
-func (c *eventsClient) UserCreated(ctx context.Context, in *UserCreatedEvent, opts ...grpc.CallOption) (*BooleanResponse, error) {
+func (c *eventsClient) UserCreated(ctx context.Context, in *User, opts ...grpc.CallOption) (*LoyaltyResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BooleanResponse)
+	out := new(LoyaltyResponse)
 	err := c.cc.Invoke(ctx, Events_UserCreated_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -87,7 +87,7 @@ func (c *eventsClient) InternalTransfer(ctx context.Context, in *InternalTransfe
 // All implementations must embed UnimplementedEventsServer
 // for forward compatibility.
 type EventsServer interface {
-	UserCreated(context.Context, *UserCreatedEvent) (*BooleanResponse, error)
+	UserCreated(context.Context, *User) (*LoyaltyResponse, error)
 	Payout(context.Context, *PayoutTransaction) (*LoyaltyResponse, error)
 	Topup(context.Context, *TopupTransaction) (*LoyaltyResponse, error)
 	InternalTransfer(context.Context, *InternalTransferTransaction) (*LoyaltyResponse, error)
@@ -101,7 +101,7 @@ type EventsServer interface {
 // pointer dereference when methods are called.
 type UnimplementedEventsServer struct{}
 
-func (UnimplementedEventsServer) UserCreated(context.Context, *UserCreatedEvent) (*BooleanResponse, error) {
+func (UnimplementedEventsServer) UserCreated(context.Context, *User) (*LoyaltyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserCreated not implemented")
 }
 func (UnimplementedEventsServer) Payout(context.Context, *PayoutTransaction) (*LoyaltyResponse, error) {
@@ -135,7 +135,7 @@ func RegisterEventsServer(s grpc.ServiceRegistrar, srv EventsServer) {
 }
 
 func _Events_UserCreated_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserCreatedEvent)
+	in := new(User)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -147,7 +147,7 @@ func _Events_UserCreated_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: Events_UserCreated_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventsServer).UserCreated(ctx, req.(*UserCreatedEvent))
+		return srv.(EventsServer).UserCreated(ctx, req.(*User))
 	}
 	return interceptor(ctx, in, info, handler)
 }
