@@ -1,0 +1,29 @@
+syntax = "proto3";
+import "events.proto";
+
+package optiswift.proto.nutmeg;
+
+option go_package = "./;proto";
+
+
+message ActivateRuleRequest {
+    string rule_id = 1;
+}
+
+message GetCurrencyRulesRequest{
+    string currency = 1;
+}
+
+message GetCurrencyRulesResponse{
+    string id = 1;
+    string name = 2;
+    EventType event = 3;
+    string condition = 4;
+    optional string reference = 5;
+    repeated Benefit benefits = 6;
+}
+
+service RuleService {
+    rpc ActivateRule(ActivateRuleRequest) returns (BooleanResponse);
+    rpc GetCurrencyRules(GetCurrencyRulesRequest) returns (GetCurrencyRulesResponse);
+}

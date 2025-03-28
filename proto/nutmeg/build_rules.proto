@@ -5,13 +5,6 @@ package optiswift.proto.nutmeg;
 
 option go_package = "./;proto";
 
-enum EventType {
-  PAYOUT = 0;
-  TOPUP = 1;
-  USER_CREATED = 2;
-  INTERNAL_TRANSFER = 3;
-}
-
 message BuildRulesRequest {
   double amount = 1;
   string currency = 2;
@@ -20,10 +13,6 @@ message BuildRulesRequest {
   string benefit_description = 5;
   string name = 6;
   BenefitType benefit_type = 7;
-}
-
-message BooleanResponse {
-  bool success = 1;
 }
 
 
