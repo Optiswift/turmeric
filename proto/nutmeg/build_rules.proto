@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "events.proto";
+import "google/protobuf/timestamp.proto"; 
 
 package optiswift.proto.nutmeg;
 
@@ -13,6 +14,7 @@ message BuildRulesRequest {
   string benefit_description = 5;
   string name = 6;
   BenefitType benefit_type = 7;
+  google.protobuf.Timestamp expires_at = 8;
 }
 
 
