@@ -4,6 +4,8 @@ package optiswift.proto.nutmeg;
 
 option go_package = "./;proto";
 
+import "google/protobuf/timestamp.proto"; 
+
 enum TransferStatus {
   QUEUED = 0;
   PROCESSING = 1;
@@ -80,6 +82,7 @@ message PayoutTransaction {
   string provider = 9;
   TransferStatus status = 10;
   ReferralStatus referral_status = 11;
+  google.protobuf.Timestamp signedup_at = 12;
 }
 
 message TopupTransaction {
