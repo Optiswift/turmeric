@@ -25,7 +25,7 @@ message CurrencyRule{
     string condition = 4;
     optional string reference = 5;
     repeated Benefit benefits = 6;
-    int32 threshold_amount = 7;
+    double threshold_amount = 7;
 }
 
 service RuleService {
