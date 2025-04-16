@@ -426,6 +426,7 @@ func (x *PayoutBeneficiary) GetPaymentMethod() string {
 type LoyaltyResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Benefits      []*Benefit             `protobuf:"bytes,1,rep,name=benefits,proto3" json:"benefits,omitempty"`
+	Rules         []*Rule                `protobuf:"bytes,2,rep,name=rules,proto3" json:"rules,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -463,6 +464,13 @@ func (*LoyaltyResponse) Descriptor() ([]byte, []int) {
 func (x *LoyaltyResponse) GetBenefits() []*Benefit {
 	if x != nil {
 		return x.Benefits
+	}
+	return nil
+}
+
+func (x *LoyaltyResponse) GetRules() []*Rule {
+	if x != nil {
+		return x.Rules
 	}
 	return nil
 }
@@ -967,6 +975,98 @@ func (x *InternalTransferTransaction) GetStatus() TransferStatus {
 	return TransferStatus_QUEUED
 }
 
+type Rule struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name            string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Event           EventType              `protobuf:"varint,3,opt,name=event,proto3,enum=optiswift.proto.nutmeg.EventType" json:"event,omitempty"`
+	Condition       string                 `protobuf:"bytes,4,opt,name=condition,proto3" json:"condition,omitempty"`
+	Reference       string                 `protobuf:"bytes,5,opt,name=reference,proto3" json:"reference,omitempty"`
+	Benefits        []*Benefit             `protobuf:"bytes,6,rep,name=benefits,proto3" json:"benefits,omitempty"`
+	ThresholdAmount float64                `protobuf:"fixed64,7,opt,name=threshold_amount,json=thresholdAmount,proto3" json:"threshold_amount,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *Rule) Reset() {
+	*x = Rule{}
+	mi := &file_events_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rule) ProtoMessage() {}
+
+func (x *Rule) ProtoReflect() protoreflect.Message {
+	mi := &file_events_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rule.ProtoReflect.Descriptor instead.
+func (*Rule) Descriptor() ([]byte, []int) {
+	return file_events_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *Rule) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Rule) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Rule) GetEvent() EventType {
+	if x != nil {
+		return x.Event
+	}
+	return EventType_PAYOUT
+}
+
+func (x *Rule) GetCondition() string {
+	if x != nil {
+		return x.Condition
+	}
+	return ""
+}
+
+func (x *Rule) GetReference() string {
+	if x != nil {
+		return x.Reference
+	}
+	return ""
+}
+
+func (x *Rule) GetBenefits() []*Benefit {
+	if x != nil {
+		return x.Benefits
+	}
+	return nil
+}
+
+func (x *Rule) GetThresholdAmount() float64 {
+	if x != nil {
+		return x.ThresholdAmount
+	}
+	return 0
+}
+
 var File_events_proto protoreflect.FileDescriptor
 
 const file_events_proto_rawDesc = "" +
@@ -987,9 +1087,10 @@ const file_events_proto_rawDesc = "" +
 	"\faccount_name\x18\x02 \x01(\tR\vaccountName\x12%\n" +
 	"\x0einstitution_id\x18\x03 \x01(\tR\rinstitutionId\x12\x18\n" +
 	"\acountry\x18\x04 \x01(\tR\acountry\x12%\n" +
-	"\x0epayment_method\x18\x05 \x01(\tR\rpaymentMethod\"N\n" +
+	"\x0epayment_method\x18\x05 \x01(\tR\rpaymentMethod\"\x82\x01\n" +
 	"\x0fLoyaltyResponse\x12;\n" +
-	"\bbenefits\x18\x01 \x03(\v2\x1f.optiswift.proto.nutmeg.BenefitR\bbenefits\"\x95\x01\n" +
+	"\bbenefits\x18\x01 \x03(\v2\x1f.optiswift.proto.nutmeg.BenefitR\bbenefits\x122\n" +
+	"\x05rules\x18\x02 \x03(\v2\x1c.optiswift.proto.nutmeg.RuleR\x05rules\"\x95\x01\n" +
 	"\aBenefit\x127\n" +
 	"\x04type\x18\x01 \x01(\x0e2#.optiswift.proto.nutmeg.BenefitTypeR\x04type\x12\x16\n" +
 	"\x06amount\x18\x02 \x01(\x01R\x06amount\x12 \n" +
@@ -1039,7 +1140,15 @@ const file_events_proto_rawDesc = "" +
 	"\x06sender\x18\b \x01(\v2\x1c.optiswift.proto.nutmeg.UserR\x06sender\x12>\n" +
 	"\vbeneficiary\x18\t \x01(\v2\x1c.optiswift.proto.nutmeg.UserR\vbeneficiary\x12>\n" +
 	"\x06status\x18\n" +
-	" \x01(\x0e2&.optiswift.proto.nutmeg.TransferStatusR\x06status*E\n" +
+	" \x01(\x0e2&.optiswift.proto.nutmeg.TransferStatusR\x06status\"\x87\x02\n" +
+	"\x04Rule\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x127\n" +
+	"\x05event\x18\x03 \x01(\x0e2!.optiswift.proto.nutmeg.EventTypeR\x05event\x12\x1c\n" +
+	"\tcondition\x18\x04 \x01(\tR\tcondition\x12\x1c\n" +
+	"\treference\x18\x05 \x01(\tR\treference\x12;\n" +
+	"\bbenefits\x18\x06 \x03(\v2\x1f.optiswift.proto.nutmeg.BenefitR\bbenefits\x12)\n" +
+	"\x10threshold_amount\x18\a \x01(\x01R\x0fthresholdAmount*E\n" +
 	"\x0eTransferStatus\x12\n" +
 	"\n" +
 	"\x06QUEUED\x10\x00\x12\x0e\n" +
@@ -1084,7 +1193,7 @@ func file_events_proto_rawDescGZIP() []byte {
 }
 
 var file_events_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_events_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_events_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_events_proto_goTypes = []any{
 	(TransferStatus)(0),                 // 0: optiswift.proto.nutmeg.TransferStatus
 	(BenefitType)(0),                    // 1: optiswift.proto.nutmeg.BenefitType
@@ -1099,35 +1208,39 @@ var file_events_proto_goTypes = []any{
 	(*PayoutTransaction)(nil),           // 10: optiswift.proto.nutmeg.PayoutTransaction
 	(*TopupTransaction)(nil),            // 11: optiswift.proto.nutmeg.TopupTransaction
 	(*InternalTransferTransaction)(nil), // 12: optiswift.proto.nutmeg.InternalTransferTransaction
-	(*timestamppb.Timestamp)(nil),       // 13: google.protobuf.Timestamp
+	(*Rule)(nil),                        // 13: optiswift.proto.nutmeg.Rule
+	(*timestamppb.Timestamp)(nil),       // 14: google.protobuf.Timestamp
 }
 var file_events_proto_depIdxs = []int32{
 	8,  // 0: optiswift.proto.nutmeg.LoyaltyResponse.benefits:type_name -> optiswift.proto.nutmeg.Benefit
-	1,  // 1: optiswift.proto.nutmeg.Benefit.type:type_name -> optiswift.proto.nutmeg.BenefitType
-	6,  // 2: optiswift.proto.nutmeg.PayoutTransaction.beneficiary:type_name -> optiswift.proto.nutmeg.PayoutBeneficiary
-	5,  // 3: optiswift.proto.nutmeg.PayoutTransaction.sender:type_name -> optiswift.proto.nutmeg.User
-	0,  // 4: optiswift.proto.nutmeg.PayoutTransaction.status:type_name -> optiswift.proto.nutmeg.TransferStatus
-	2,  // 5: optiswift.proto.nutmeg.PayoutTransaction.referral_status:type_name -> optiswift.proto.nutmeg.ReferralStatus
-	13, // 6: optiswift.proto.nutmeg.PayoutTransaction.signedup_at:type_name -> google.protobuf.Timestamp
-	9,  // 7: optiswift.proto.nutmeg.TopupTransaction.initiator:type_name -> optiswift.proto.nutmeg.TopupInitiator
-	5,  // 8: optiswift.proto.nutmeg.TopupTransaction.beneficiary:type_name -> optiswift.proto.nutmeg.User
-	0,  // 9: optiswift.proto.nutmeg.TopupTransaction.status:type_name -> optiswift.proto.nutmeg.TransferStatus
-	5,  // 10: optiswift.proto.nutmeg.InternalTransferTransaction.sender:type_name -> optiswift.proto.nutmeg.User
-	5,  // 11: optiswift.proto.nutmeg.InternalTransferTransaction.beneficiary:type_name -> optiswift.proto.nutmeg.User
-	0,  // 12: optiswift.proto.nutmeg.InternalTransferTransaction.status:type_name -> optiswift.proto.nutmeg.TransferStatus
-	5,  // 13: optiswift.proto.nutmeg.Events.UserCreated:input_type -> optiswift.proto.nutmeg.User
-	10, // 14: optiswift.proto.nutmeg.Events.Payout:input_type -> optiswift.proto.nutmeg.PayoutTransaction
-	11, // 15: optiswift.proto.nutmeg.Events.Topup:input_type -> optiswift.proto.nutmeg.TopupTransaction
-	12, // 16: optiswift.proto.nutmeg.Events.InternalTransfer:input_type -> optiswift.proto.nutmeg.InternalTransferTransaction
-	7,  // 17: optiswift.proto.nutmeg.Events.UserCreated:output_type -> optiswift.proto.nutmeg.LoyaltyResponse
-	7,  // 18: optiswift.proto.nutmeg.Events.Payout:output_type -> optiswift.proto.nutmeg.LoyaltyResponse
-	7,  // 19: optiswift.proto.nutmeg.Events.Topup:output_type -> optiswift.proto.nutmeg.LoyaltyResponse
-	7,  // 20: optiswift.proto.nutmeg.Events.InternalTransfer:output_type -> optiswift.proto.nutmeg.LoyaltyResponse
-	17, // [17:21] is the sub-list for method output_type
-	13, // [13:17] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	13, // 1: optiswift.proto.nutmeg.LoyaltyResponse.rules:type_name -> optiswift.proto.nutmeg.Rule
+	1,  // 2: optiswift.proto.nutmeg.Benefit.type:type_name -> optiswift.proto.nutmeg.BenefitType
+	6,  // 3: optiswift.proto.nutmeg.PayoutTransaction.beneficiary:type_name -> optiswift.proto.nutmeg.PayoutBeneficiary
+	5,  // 4: optiswift.proto.nutmeg.PayoutTransaction.sender:type_name -> optiswift.proto.nutmeg.User
+	0,  // 5: optiswift.proto.nutmeg.PayoutTransaction.status:type_name -> optiswift.proto.nutmeg.TransferStatus
+	2,  // 6: optiswift.proto.nutmeg.PayoutTransaction.referral_status:type_name -> optiswift.proto.nutmeg.ReferralStatus
+	14, // 7: optiswift.proto.nutmeg.PayoutTransaction.signedup_at:type_name -> google.protobuf.Timestamp
+	9,  // 8: optiswift.proto.nutmeg.TopupTransaction.initiator:type_name -> optiswift.proto.nutmeg.TopupInitiator
+	5,  // 9: optiswift.proto.nutmeg.TopupTransaction.beneficiary:type_name -> optiswift.proto.nutmeg.User
+	0,  // 10: optiswift.proto.nutmeg.TopupTransaction.status:type_name -> optiswift.proto.nutmeg.TransferStatus
+	5,  // 11: optiswift.proto.nutmeg.InternalTransferTransaction.sender:type_name -> optiswift.proto.nutmeg.User
+	5,  // 12: optiswift.proto.nutmeg.InternalTransferTransaction.beneficiary:type_name -> optiswift.proto.nutmeg.User
+	0,  // 13: optiswift.proto.nutmeg.InternalTransferTransaction.status:type_name -> optiswift.proto.nutmeg.TransferStatus
+	3,  // 14: optiswift.proto.nutmeg.Rule.event:type_name -> optiswift.proto.nutmeg.EventType
+	8,  // 15: optiswift.proto.nutmeg.Rule.benefits:type_name -> optiswift.proto.nutmeg.Benefit
+	5,  // 16: optiswift.proto.nutmeg.Events.UserCreated:input_type -> optiswift.proto.nutmeg.User
+	10, // 17: optiswift.proto.nutmeg.Events.Payout:input_type -> optiswift.proto.nutmeg.PayoutTransaction
+	11, // 18: optiswift.proto.nutmeg.Events.Topup:input_type -> optiswift.proto.nutmeg.TopupTransaction
+	12, // 19: optiswift.proto.nutmeg.Events.InternalTransfer:input_type -> optiswift.proto.nutmeg.InternalTransferTransaction
+	7,  // 20: optiswift.proto.nutmeg.Events.UserCreated:output_type -> optiswift.proto.nutmeg.LoyaltyResponse
+	7,  // 21: optiswift.proto.nutmeg.Events.Payout:output_type -> optiswift.proto.nutmeg.LoyaltyResponse
+	7,  // 22: optiswift.proto.nutmeg.Events.Topup:output_type -> optiswift.proto.nutmeg.LoyaltyResponse
+	7,  // 23: optiswift.proto.nutmeg.Events.InternalTransfer:output_type -> optiswift.proto.nutmeg.LoyaltyResponse
+	20, // [20:24] is the sub-list for method output_type
+	16, // [16:20] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_events_proto_init() }
@@ -1141,7 +1254,7 @@ func file_events_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_events_proto_rawDesc), len(file_events_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   9,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
