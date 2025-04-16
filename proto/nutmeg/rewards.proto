@@ -19,6 +19,15 @@ message FetchRewardSummaryResponse {
   repeated RewardSummary rewards = 1;
 }
 
+message GetPotentialRewardsRequest {
+  repeated string rule_ids = 1;
+}
+
+message GetPotentialRewardsResponse {
+  repeated RewardSummary rewards = 1;
+}
+
 service Rewards {
   rpc FetchRewardSummary(FetchRewardSummaryRequest) returns (FetchRewardSummaryResponse);
+  rpc GetPotentialRewards(GetPotentialRewardsRequest) returns (GetPotentialRewardsResponse);
 }
