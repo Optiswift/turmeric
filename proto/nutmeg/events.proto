@@ -62,7 +62,6 @@ message Benefit {
   BenefitType type = 1;
   double amount = 2;
   string description = 3;
-  string rule_id = 4;
 }
 
 message TopupInitiator {
