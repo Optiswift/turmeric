@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	RuleService_ActivateRule_FullMethodName     = "/optiswift.proto.nutmeg.RuleService/ActivateRule"
 	RuleService_GetCurrencyRules_FullMethodName = "/optiswift.proto.nutmeg.RuleService/GetCurrencyRules"
+	RuleService_GetCurrencyRule_FullMethodName  = "/optiswift.proto.nutmeg.RuleService/GetCurrencyRule"
 )
 
 // RuleServiceClient is the client API for RuleService service.
@@ -29,6 +30,7 @@ const (
 type RuleServiceClient interface {
 	ActivateRule(ctx context.Context, in *ActivateRuleRequest, opts ...grpc.CallOption) (*BooleanResponse, error)
 	GetCurrencyRules(ctx context.Context, in *GetCurrencyRulesRequest, opts ...grpc.CallOption) (*GetCurrencyRulesResponse, error)
+	GetCurrencyRule(ctx context.Context, in *GetCurrencyRuleRequest, opts ...grpc.CallOption) (*GetCurrencyRuleResponse, error)
 }
 
 type ruleServiceClient struct {
@@ -59,12 +61,23 @@ func (c *ruleServiceClient) GetCurrencyRules(ctx context.Context, in *GetCurrenc
 	return out, nil
 }
 
+func (c *ruleServiceClient) GetCurrencyRule(ctx context.Context, in *GetCurrencyRuleRequest, opts ...grpc.CallOption) (*GetCurrencyRuleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCurrencyRuleResponse)
+	err := c.cc.Invoke(ctx, RuleService_GetCurrencyRule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RuleServiceServer is the server API for RuleService service.
 // All implementations must embed UnimplementedRuleServiceServer
 // for forward compatibility.
 type RuleServiceServer interface {
 	ActivateRule(context.Context, *ActivateRuleRequest) (*BooleanResponse, error)
 	GetCurrencyRules(context.Context, *GetCurrencyRulesRequest) (*GetCurrencyRulesResponse, error)
+	GetCurrencyRule(context.Context, *GetCurrencyRuleRequest) (*GetCurrencyRuleResponse, error)
 	mustEmbedUnimplementedRuleServiceServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedRuleServiceServer) ActivateRule(context.Context, *ActivateRul
 }
 func (UnimplementedRuleServiceServer) GetCurrencyRules(context.Context, *GetCurrencyRulesRequest) (*GetCurrencyRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCurrencyRules not implemented")
+}
+func (UnimplementedRuleServiceServer) GetCurrencyRule(context.Context, *GetCurrencyRuleRequest) (*GetCurrencyRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCurrencyRule not implemented")
 }
 func (UnimplementedRuleServiceServer) mustEmbedUnimplementedRuleServiceServer() {}
 func (UnimplementedRuleServiceServer) testEmbeddedByValue()                     {}
@@ -138,6 +154,24 @@ func _RuleService_GetCurrencyRules_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RuleService_GetCurrencyRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCurrencyRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RuleServiceServer).GetCurrencyRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RuleService_GetCurrencyRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RuleServiceServer).GetCurrencyRule(ctx, req.(*GetCurrencyRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RuleService_ServiceDesc is the grpc.ServiceDesc for RuleService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var RuleService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCurrencyRules",
 			Handler:    _RuleService_GetCurrencyRules_Handler,
+		},
+		{
+			MethodName: "GetCurrencyRule",
+			Handler:    _RuleService_GetCurrencyRule_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

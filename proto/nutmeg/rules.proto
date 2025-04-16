@@ -26,9 +26,19 @@ message CurrencyRule{
     optional string reference = 5;
     repeated Benefit benefits = 6;
     double threshold_amount = 7;
+    string currency = 8;
+}
+
+message GetCurrencyRuleRequest{
+    string rule_id =1;
+}
+
+message GetCurrencyRuleResponse{
+    CurrencyRule rule = 1;
 }
 
 service RuleService {
     rpc ActivateRule(ActivateRuleRequest) returns (BooleanResponse);
     rpc GetCurrencyRules(GetCurrencyRulesRequest) returns (GetCurrencyRulesResponse);
+    rpc GetCurrencyRule(GetCurrencyRuleRequest) returns (GetCurrencyRuleResponse);
 }
