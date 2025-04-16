@@ -480,7 +480,6 @@ type Benefit struct {
 	Type          BenefitType            `protobuf:"varint,1,opt,name=type,proto3,enum=optiswift.proto.nutmeg.BenefitType" json:"type,omitempty"`
 	Amount        float64                `protobuf:"fixed64,2,opt,name=amount,proto3" json:"amount,omitempty"`
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	RuleId        string                 `protobuf:"bytes,4,opt,name=rule_id,json=ruleId,proto3" json:"rule_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -532,13 +531,6 @@ func (x *Benefit) GetAmount() float64 {
 func (x *Benefit) GetDescription() string {
 	if x != nil {
 		return x.Description
-	}
-	return ""
-}
-
-func (x *Benefit) GetRuleId() string {
-	if x != nil {
-		return x.RuleId
 	}
 	return ""
 }
@@ -1090,12 +1082,11 @@ const file_events_proto_rawDesc = "" +
 	"\x0epayment_method\x18\x05 \x01(\tR\rpaymentMethod\"\x82\x01\n" +
 	"\x0fLoyaltyResponse\x12;\n" +
 	"\bbenefits\x18\x01 \x03(\v2\x1f.optiswift.proto.nutmeg.BenefitR\bbenefits\x122\n" +
-	"\x05rules\x18\x02 \x03(\v2\x1c.optiswift.proto.nutmeg.RuleR\x05rules\"\x95\x01\n" +
+	"\x05rules\x18\x02 \x03(\v2\x1c.optiswift.proto.nutmeg.RuleR\x05rules\"|\n" +
 	"\aBenefit\x127\n" +
 	"\x04type\x18\x01 \x01(\x0e2#.optiswift.proto.nutmeg.BenefitTypeR\x04type\x12\x16\n" +
 	"\x06amount\x18\x02 \x01(\x01R\x06amount\x12 \n" +
-	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x17\n" +
-	"\arule_id\x18\x04 \x01(\tR\x06ruleId\"\x93\x01\n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\"\x93\x01\n" +
 	"\x0eTopupInitiator\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tR\taccountId\x12!\n" +
