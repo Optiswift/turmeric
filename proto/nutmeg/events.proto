@@ -55,6 +55,7 @@ message PayoutBeneficiary {
 
 message LoyaltyResponse {
   repeated Benefit benefits = 1;
+  repeated Rule rules = 2;
 }
 
 message Benefit {
@@ -110,6 +111,16 @@ message InternalTransferTransaction {
   User sender = 8;
   User beneficiary = 9;
   TransferStatus status = 10;
+}
+
+message Rule {
+  string id = 1;
+  string name = 2;
+  EventType event = 3;
+  string condition = 4;
+  optional string reference = 5;
+  repeated Benefit benefits = 6;
+  double threshold_amount = 7;
 }
 
 service Events {
