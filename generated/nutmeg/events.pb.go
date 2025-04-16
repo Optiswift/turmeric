@@ -981,7 +981,7 @@ type Rule struct {
 	Name            string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Event           EventType              `protobuf:"varint,3,opt,name=event,proto3,enum=optiswift.proto.nutmeg.EventType" json:"event,omitempty"`
 	Condition       string                 `protobuf:"bytes,4,opt,name=condition,proto3" json:"condition,omitempty"`
-	Reference       string                 `protobuf:"bytes,5,opt,name=reference,proto3" json:"reference,omitempty"`
+	Reference       *string                `protobuf:"bytes,5,opt,name=reference,proto3,oneof" json:"reference,omitempty"`
 	Benefits        []*Benefit             `protobuf:"bytes,6,rep,name=benefits,proto3" json:"benefits,omitempty"`
 	ThresholdAmount float64                `protobuf:"fixed64,7,opt,name=threshold_amount,json=thresholdAmount,proto3" json:"threshold_amount,omitempty"`
 	unknownFields   protoimpl.UnknownFields
@@ -1047,8 +1047,8 @@ func (x *Rule) GetCondition() string {
 }
 
 func (x *Rule) GetReference() string {
-	if x != nil {
-		return x.Reference
+	if x != nil && x.Reference != nil {
+		return *x.Reference
 	}
 	return ""
 }
@@ -1140,15 +1140,17 @@ const file_events_proto_rawDesc = "" +
 	"\x06sender\x18\b \x01(\v2\x1c.optiswift.proto.nutmeg.UserR\x06sender\x12>\n" +
 	"\vbeneficiary\x18\t \x01(\v2\x1c.optiswift.proto.nutmeg.UserR\vbeneficiary\x12>\n" +
 	"\x06status\x18\n" +
-	" \x01(\x0e2&.optiswift.proto.nutmeg.TransferStatusR\x06status\"\x87\x02\n" +
+	" \x01(\x0e2&.optiswift.proto.nutmeg.TransferStatusR\x06status\"\x9a\x02\n" +
 	"\x04Rule\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x127\n" +
 	"\x05event\x18\x03 \x01(\x0e2!.optiswift.proto.nutmeg.EventTypeR\x05event\x12\x1c\n" +
-	"\tcondition\x18\x04 \x01(\tR\tcondition\x12\x1c\n" +
-	"\treference\x18\x05 \x01(\tR\treference\x12;\n" +
+	"\tcondition\x18\x04 \x01(\tR\tcondition\x12!\n" +
+	"\treference\x18\x05 \x01(\tH\x00R\treference\x88\x01\x01\x12;\n" +
 	"\bbenefits\x18\x06 \x03(\v2\x1f.optiswift.proto.nutmeg.BenefitR\bbenefits\x12)\n" +
-	"\x10threshold_amount\x18\a \x01(\x01R\x0fthresholdAmount*E\n" +
+	"\x10threshold_amount\x18\a \x01(\x01R\x0fthresholdAmountB\f\n" +
+	"\n" +
+	"_reference*E\n" +
 	"\x0eTransferStatus\x12\n" +
 	"\n" +
 	"\x06QUEUED\x10\x00\x12\x0e\n" +
@@ -1248,6 +1250,7 @@ func file_events_proto_init() {
 	if File_events_proto != nil {
 		return
 	}
+	file_events_proto_msgTypes[9].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

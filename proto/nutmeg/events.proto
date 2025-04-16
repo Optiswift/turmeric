@@ -118,7 +118,7 @@ message Rule {
   string name = 2;
   EventType event = 3;
   string condition = 4;
-  string reference = 5;
+  optional string reference = 5;
   repeated Benefit benefits = 6;
   double threshold_amount = 7;
 }
