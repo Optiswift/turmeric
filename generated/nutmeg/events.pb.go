@@ -976,6 +976,7 @@ type Rule struct {
 	Reference       *string                `protobuf:"bytes,5,opt,name=reference,proto3,oneof" json:"reference,omitempty"`
 	Benefits        []*Benefit             `protobuf:"bytes,6,rep,name=benefits,proto3" json:"benefits,omitempty"`
 	ThresholdAmount float64                `protobuf:"fixed64,7,opt,name=threshold_amount,json=thresholdAmount,proto3" json:"threshold_amount,omitempty"`
+	Currency        string                 `protobuf:"bytes,8,opt,name=currency,proto3" json:"currency,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1059,6 +1060,13 @@ func (x *Rule) GetThresholdAmount() float64 {
 	return 0
 }
 
+func (x *Rule) GetCurrency() string {
+	if x != nil {
+		return x.Currency
+	}
+	return ""
+}
+
 var File_events_proto protoreflect.FileDescriptor
 
 const file_events_proto_rawDesc = "" +
@@ -1131,7 +1139,7 @@ const file_events_proto_rawDesc = "" +
 	"\x06sender\x18\b \x01(\v2\x1c.optiswift.proto.nutmeg.UserR\x06sender\x12>\n" +
 	"\vbeneficiary\x18\t \x01(\v2\x1c.optiswift.proto.nutmeg.UserR\vbeneficiary\x12>\n" +
 	"\x06status\x18\n" +
-	" \x01(\x0e2&.optiswift.proto.nutmeg.TransferStatusR\x06status\"\x9a\x02\n" +
+	" \x01(\x0e2&.optiswift.proto.nutmeg.TransferStatusR\x06status\"\xb6\x02\n" +
 	"\x04Rule\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x127\n" +
@@ -1139,7 +1147,8 @@ const file_events_proto_rawDesc = "" +
 	"\tcondition\x18\x04 \x01(\tR\tcondition\x12!\n" +
 	"\treference\x18\x05 \x01(\tH\x00R\treference\x88\x01\x01\x12;\n" +
 	"\bbenefits\x18\x06 \x03(\v2\x1f.optiswift.proto.nutmeg.BenefitR\bbenefits\x12)\n" +
-	"\x10threshold_amount\x18\a \x01(\x01R\x0fthresholdAmountB\f\n" +
+	"\x10threshold_amount\x18\a \x01(\x01R\x0fthresholdAmount\x12\x1a\n" +
+	"\bcurrency\x18\b \x01(\tR\bcurrencyB\f\n" +
 	"\n" +
 	"_reference*E\n" +
 	"\x0eTransferStatus\x12\n" +

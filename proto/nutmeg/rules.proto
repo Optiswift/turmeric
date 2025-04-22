@@ -1,6 +1,6 @@
 syntax = "proto3";
 import "events.proto";
-
+import "google/protobuf/empty.proto";
 package optiswift.proto.nutmeg;
 
 option go_package = "./;proto";
@@ -37,8 +37,13 @@ message GetCurrencyRuleResponse{
     CurrencyRule rule = 1;
 }
 
+message GetAllRulesResponse {
+    repeated CurrencyRule rules = 1;
+}
+
 service RuleService {
     rpc ActivateRule(ActivateRuleRequest) returns (BooleanResponse);
     rpc GetCurrencyRules(GetCurrencyRulesRequest) returns (GetCurrencyRulesResponse);
     rpc GetCurrencyRule(GetCurrencyRuleRequest) returns (GetCurrencyRuleResponse);
+    rpc GetAllRules(google.protobuf.Empty) returns (GetAllRulesResponse);
 }

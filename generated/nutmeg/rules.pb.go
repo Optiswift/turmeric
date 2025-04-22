@@ -9,6 +9,7 @@ package proto
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -341,11 +342,55 @@ func (x *GetCurrencyRuleResponse) GetRule() *CurrencyRule {
 	return nil
 }
 
+type GetAllRulesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rules         []*CurrencyRule        `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetAllRulesResponse) Reset() {
+	*x = GetAllRulesResponse{}
+	mi := &file_rules_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAllRulesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAllRulesResponse) ProtoMessage() {}
+
+func (x *GetAllRulesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rules_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAllRulesResponse.ProtoReflect.Descriptor instead.
+func (*GetAllRulesResponse) Descriptor() ([]byte, []int) {
+	return file_rules_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetAllRulesResponse) GetRules() []*CurrencyRule {
+	if x != nil {
+		return x.Rules
+	}
+	return nil
+}
+
 var File_rules_proto protoreflect.FileDescriptor
 
 const file_rules_proto_rawDesc = "" +
 	"\n" +
-	"\vrules.proto\x12\x16optiswift.proto.nutmeg\x1a\fevents.proto\".\n" +
+	"\vrules.proto\x12\x16optiswift.proto.nutmeg\x1a\fevents.proto\x1a\x1bgoogle/protobuf/empty.proto\".\n" +
 	"\x13ActivateRuleRequest\x12\x17\n" +
 	"\arule_id\x18\x01 \x01(\tR\x06ruleId\"5\n" +
 	"\x17GetCurrencyRulesRequest\x12\x1a\n" +
@@ -366,11 +411,14 @@ const file_rules_proto_rawDesc = "" +
 	"\x16GetCurrencyRuleRequest\x12\x17\n" +
 	"\arule_id\x18\x01 \x01(\tR\x06ruleId\"S\n" +
 	"\x17GetCurrencyRuleResponse\x128\n" +
-	"\x04rule\x18\x01 \x01(\v2$.optiswift.proto.nutmeg.CurrencyRuleR\x04rule2\xde\x02\n" +
+	"\x04rule\x18\x01 \x01(\v2$.optiswift.proto.nutmeg.CurrencyRuleR\x04rule\"Q\n" +
+	"\x13GetAllRulesResponse\x12:\n" +
+	"\x05rules\x18\x01 \x03(\v2$.optiswift.proto.nutmeg.CurrencyRuleR\x05rules2\xb2\x03\n" +
 	"\vRuleService\x12d\n" +
 	"\fActivateRule\x12+.optiswift.proto.nutmeg.ActivateRuleRequest\x1a'.optiswift.proto.nutmeg.BooleanResponse\x12u\n" +
 	"\x10GetCurrencyRules\x12/.optiswift.proto.nutmeg.GetCurrencyRulesRequest\x1a0.optiswift.proto.nutmeg.GetCurrencyRulesResponse\x12r\n" +
-	"\x0fGetCurrencyRule\x12..optiswift.proto.nutmeg.GetCurrencyRuleRequest\x1a/.optiswift.proto.nutmeg.GetCurrencyRuleResponseB\n" +
+	"\x0fGetCurrencyRule\x12..optiswift.proto.nutmeg.GetCurrencyRuleRequest\x1a/.optiswift.proto.nutmeg.GetCurrencyRuleResponse\x12R\n" +
+	"\vGetAllRules\x12\x16.google.protobuf.Empty\x1a+.optiswift.proto.nutmeg.GetAllRulesResponseB\n" +
 	"Z\b./;protob\x06proto3"
 
 var (
@@ -385,7 +433,7 @@ func file_rules_proto_rawDescGZIP() []byte {
 	return file_rules_proto_rawDescData
 }
 
-var file_rules_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_rules_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_rules_proto_goTypes = []any{
 	(*ActivateRuleRequest)(nil),      // 0: optiswift.proto.nutmeg.ActivateRuleRequest
 	(*GetCurrencyRulesRequest)(nil),  // 1: optiswift.proto.nutmeg.GetCurrencyRulesRequest
@@ -393,26 +441,31 @@ var file_rules_proto_goTypes = []any{
 	(*CurrencyRule)(nil),             // 3: optiswift.proto.nutmeg.CurrencyRule
 	(*GetCurrencyRuleRequest)(nil),   // 4: optiswift.proto.nutmeg.GetCurrencyRuleRequest
 	(*GetCurrencyRuleResponse)(nil),  // 5: optiswift.proto.nutmeg.GetCurrencyRuleResponse
-	(EventType)(0),                   // 6: optiswift.proto.nutmeg.EventType
-	(*Benefit)(nil),                  // 7: optiswift.proto.nutmeg.Benefit
-	(*BooleanResponse)(nil),          // 8: optiswift.proto.nutmeg.BooleanResponse
+	(*GetAllRulesResponse)(nil),      // 6: optiswift.proto.nutmeg.GetAllRulesResponse
+	(EventType)(0),                   // 7: optiswift.proto.nutmeg.EventType
+	(*Benefit)(nil),                  // 8: optiswift.proto.nutmeg.Benefit
+	(*emptypb.Empty)(nil),            // 9: google.protobuf.Empty
+	(*BooleanResponse)(nil),          // 10: optiswift.proto.nutmeg.BooleanResponse
 }
 var file_rules_proto_depIdxs = []int32{
-	3, // 0: optiswift.proto.nutmeg.GetCurrencyRulesResponse.rules:type_name -> optiswift.proto.nutmeg.CurrencyRule
-	6, // 1: optiswift.proto.nutmeg.CurrencyRule.event:type_name -> optiswift.proto.nutmeg.EventType
-	7, // 2: optiswift.proto.nutmeg.CurrencyRule.benefits:type_name -> optiswift.proto.nutmeg.Benefit
-	3, // 3: optiswift.proto.nutmeg.GetCurrencyRuleResponse.rule:type_name -> optiswift.proto.nutmeg.CurrencyRule
-	0, // 4: optiswift.proto.nutmeg.RuleService.ActivateRule:input_type -> optiswift.proto.nutmeg.ActivateRuleRequest
-	1, // 5: optiswift.proto.nutmeg.RuleService.GetCurrencyRules:input_type -> optiswift.proto.nutmeg.GetCurrencyRulesRequest
-	4, // 6: optiswift.proto.nutmeg.RuleService.GetCurrencyRule:input_type -> optiswift.proto.nutmeg.GetCurrencyRuleRequest
-	8, // 7: optiswift.proto.nutmeg.RuleService.ActivateRule:output_type -> optiswift.proto.nutmeg.BooleanResponse
-	2, // 8: optiswift.proto.nutmeg.RuleService.GetCurrencyRules:output_type -> optiswift.proto.nutmeg.GetCurrencyRulesResponse
-	5, // 9: optiswift.proto.nutmeg.RuleService.GetCurrencyRule:output_type -> optiswift.proto.nutmeg.GetCurrencyRuleResponse
-	7, // [7:10] is the sub-list for method output_type
-	4, // [4:7] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	3,  // 0: optiswift.proto.nutmeg.GetCurrencyRulesResponse.rules:type_name -> optiswift.proto.nutmeg.CurrencyRule
+	7,  // 1: optiswift.proto.nutmeg.CurrencyRule.event:type_name -> optiswift.proto.nutmeg.EventType
+	8,  // 2: optiswift.proto.nutmeg.CurrencyRule.benefits:type_name -> optiswift.proto.nutmeg.Benefit
+	3,  // 3: optiswift.proto.nutmeg.GetCurrencyRuleResponse.rule:type_name -> optiswift.proto.nutmeg.CurrencyRule
+	3,  // 4: optiswift.proto.nutmeg.GetAllRulesResponse.rules:type_name -> optiswift.proto.nutmeg.CurrencyRule
+	0,  // 5: optiswift.proto.nutmeg.RuleService.ActivateRule:input_type -> optiswift.proto.nutmeg.ActivateRuleRequest
+	1,  // 6: optiswift.proto.nutmeg.RuleService.GetCurrencyRules:input_type -> optiswift.proto.nutmeg.GetCurrencyRulesRequest
+	4,  // 7: optiswift.proto.nutmeg.RuleService.GetCurrencyRule:input_type -> optiswift.proto.nutmeg.GetCurrencyRuleRequest
+	9,  // 8: optiswift.proto.nutmeg.RuleService.GetAllRules:input_type -> google.protobuf.Empty
+	10, // 9: optiswift.proto.nutmeg.RuleService.ActivateRule:output_type -> optiswift.proto.nutmeg.BooleanResponse
+	2,  // 10: optiswift.proto.nutmeg.RuleService.GetCurrencyRules:output_type -> optiswift.proto.nutmeg.GetCurrencyRulesResponse
+	5,  // 11: optiswift.proto.nutmeg.RuleService.GetCurrencyRule:output_type -> optiswift.proto.nutmeg.GetCurrencyRuleResponse
+	6,  // 12: optiswift.proto.nutmeg.RuleService.GetAllRules:output_type -> optiswift.proto.nutmeg.GetAllRulesResponse
+	9,  // [9:13] is the sub-list for method output_type
+	5,  // [5:9] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_rules_proto_init() }
@@ -428,7 +481,7 @@ func file_rules_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_rules_proto_rawDesc), len(file_rules_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

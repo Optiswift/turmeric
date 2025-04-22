@@ -120,6 +120,7 @@ message Rule {
   optional string reference = 5;
   repeated Benefit benefits = 6;
   double threshold_amount = 7;
+  string currency = 8;
 }
 
 service Events {
