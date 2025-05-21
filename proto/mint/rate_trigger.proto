@@ -1,0 +1,26 @@
+syntax = "proto3";
+package optiswift.proto.mint;
+
+option go_package = "./;proto";
+
+
+message CreateRateTriggerRequest {
+    string quote_currency = 1;
+    string base_currency = 2;
+    string user_id = 3;
+    double threshold_amount = 4;
+}
+
+message CreateRateTriggerResponse {
+    string id = 1;
+    string expression = 2;
+    bool triggered = 3;
+    string base_currency = 4;
+    string quote_currency = 5;
+    double threshold_amount = 6;
+}
+
+service RateTriggerService {
+    rpc CreateRateTrigger(CreateRateTriggerRequest) returns (CreateRateTriggerResponse);
+}
+
