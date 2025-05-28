@@ -173,6 +173,74 @@ func (x *CreateRateTriggerResponse) GetThresholdAmount() float64 {
 	return 0
 }
 
+type CelEvaluationInput struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	BaseCurrency    string                 `protobuf:"bytes,1,opt,name=base_currency,json=baseCurrency,proto3" json:"base_currency,omitempty"`
+	QuoteCurrency   string                 `protobuf:"bytes,2,opt,name=quote_currency,json=quoteCurrency,proto3" json:"quote_currency,omitempty"`
+	ThresholdAmount float64                `protobuf:"fixed64,3,opt,name=threshold_amount,json=thresholdAmount,proto3" json:"threshold_amount,omitempty"`
+	UserId          string                 `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *CelEvaluationInput) Reset() {
+	*x = CelEvaluationInput{}
+	mi := &file_rate_trigger_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CelEvaluationInput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CelEvaluationInput) ProtoMessage() {}
+
+func (x *CelEvaluationInput) ProtoReflect() protoreflect.Message {
+	mi := &file_rate_trigger_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CelEvaluationInput.ProtoReflect.Descriptor instead.
+func (*CelEvaluationInput) Descriptor() ([]byte, []int) {
+	return file_rate_trigger_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *CelEvaluationInput) GetBaseCurrency() string {
+	if x != nil {
+		return x.BaseCurrency
+	}
+	return ""
+}
+
+func (x *CelEvaluationInput) GetQuoteCurrency() string {
+	if x != nil {
+		return x.QuoteCurrency
+	}
+	return ""
+}
+
+func (x *CelEvaluationInput) GetThresholdAmount() float64 {
+	if x != nil {
+		return x.ThresholdAmount
+	}
+	return 0
+}
+
+func (x *CelEvaluationInput) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
 var File_rate_trigger_proto protoreflect.FileDescriptor
 
 const file_rate_trigger_proto_rawDesc = "" +
@@ -191,7 +259,12 @@ const file_rate_trigger_proto_rawDesc = "" +
 	"\ttriggered\x18\x03 \x01(\bR\ttriggered\x12#\n" +
 	"\rbase_currency\x18\x04 \x01(\tR\fbaseCurrency\x12%\n" +
 	"\x0equote_currency\x18\x05 \x01(\tR\rquoteCurrency\x12)\n" +
-	"\x10threshold_amount\x18\x06 \x01(\x01R\x0fthresholdAmount2\x8a\x01\n" +
+	"\x10threshold_amount\x18\x06 \x01(\x01R\x0fthresholdAmount\"\xa4\x01\n" +
+	"\x12CelEvaluationInput\x12#\n" +
+	"\rbase_currency\x18\x01 \x01(\tR\fbaseCurrency\x12%\n" +
+	"\x0equote_currency\x18\x02 \x01(\tR\rquoteCurrency\x12)\n" +
+	"\x10threshold_amount\x18\x03 \x01(\x01R\x0fthresholdAmount\x12\x17\n" +
+	"\auser_id\x18\x04 \x01(\tR\x06userId2\x8a\x01\n" +
 	"\x12RateTriggerService\x12t\n" +
 	"\x11CreateRateTrigger\x12..optiswift.proto.mint.CreateRateTriggerRequest\x1a/.optiswift.proto.mint.CreateRateTriggerResponseB\n" +
 	"Z\b./;protob\x06proto3"
@@ -208,10 +281,11 @@ func file_rate_trigger_proto_rawDescGZIP() []byte {
 	return file_rate_trigger_proto_rawDescData
 }
 
-var file_rate_trigger_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_rate_trigger_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_rate_trigger_proto_goTypes = []any{
 	(*CreateRateTriggerRequest)(nil),  // 0: optiswift.proto.mint.CreateRateTriggerRequest
 	(*CreateRateTriggerResponse)(nil), // 1: optiswift.proto.mint.CreateRateTriggerResponse
+	(*CelEvaluationInput)(nil),        // 2: optiswift.proto.mint.CelEvaluationInput
 }
 var file_rate_trigger_proto_depIdxs = []int32{
 	0, // 0: optiswift.proto.mint.RateTriggerService.CreateRateTrigger:input_type -> optiswift.proto.mint.CreateRateTriggerRequest
@@ -234,7 +308,7 @@ func file_rate_trigger_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_rate_trigger_proto_rawDesc), len(file_rate_trigger_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
