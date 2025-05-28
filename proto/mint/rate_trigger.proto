@@ -20,7 +20,13 @@ message CreateRateTriggerResponse {
     double threshold_amount = 6;
 }
 
+message CelEvaluationInput {
+  string base_currency = 1;
+  string quote_currency = 2;
+  double threshold_amount = 3;
+  string user_id = 4;
+}
+
 service RateTriggerService {
     rpc CreateRateTrigger(CreateRateTriggerRequest) returns (CreateRateTriggerResponse);
 }
-
