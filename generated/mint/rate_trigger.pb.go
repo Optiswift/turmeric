@@ -91,7 +91,7 @@ func (x *CreateRateTriggerRequest) GetThresholdAmount() float64 {
 
 type CreateRateTriggerResponse struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id              int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Expression      string                 `protobuf:"bytes,2,opt,name=expression,proto3" json:"expression,omitempty"`
 	Triggered       bool                   `protobuf:"varint,3,opt,name=triggered,proto3" json:"triggered,omitempty"`
 	BaseCurrency    string                 `protobuf:"bytes,4,opt,name=base_currency,json=baseCurrency,proto3" json:"base_currency,omitempty"`
@@ -131,11 +131,11 @@ func (*CreateRateTriggerResponse) Descriptor() ([]byte, []int) {
 	return file_rate_trigger_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateRateTriggerResponse) GetId() string {
+func (x *CreateRateTriggerResponse) GetId() int32 {
 	if x != nil {
 		return x.Id
 	}
-	return ""
+	return 0
 }
 
 func (x *CreateRateTriggerResponse) GetExpression() string {
@@ -252,7 +252,7 @@ const file_rate_trigger_proto_rawDesc = "" +
 	"\auser_id\x18\x03 \x01(\tR\x06userId\x12)\n" +
 	"\x10threshold_amount\x18\x04 \x01(\x01R\x0fthresholdAmount\"\xe0\x01\n" +
 	"\x19CreateRateTriggerResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1e\n" +
 	"\n" +
 	"expression\x18\x02 \x01(\tR\n" +
 	"expression\x12\x1c\n" +

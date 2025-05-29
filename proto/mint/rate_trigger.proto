@@ -12,7 +12,7 @@ message CreateRateTriggerRequest {
 }
 
 message CreateRateTriggerResponse {
-    string id = 1;
+    int32 id = 1;
     string expression = 2;
     bool triggered = 3;
     string base_currency = 4;
