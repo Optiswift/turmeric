@@ -21,6 +21,10 @@ message CreateRateTriggerResponse {
     string base_currency = 4;
     string quote_currency = 5;
     double threshold_amount = 6;
+    double base_currency_amount = 7;
+    int32 quote_currency_id = 8;
+    int32 base_currency_id = 9;
+    string user_id = 10;
 }
 
 message CelEvaluationInput {
@@ -28,6 +32,14 @@ message CelEvaluationInput {
   string quote_currency = 2;
   double threshold_amount = 3;
   string user_id = 4;
+}
+
+message GetPendingRateTriggersRequest {
+    string user_id = 1;
+}
+
+message GetPendingRateTriggersResponse {
+    repeated CreateRateTriggerResponse rate_triggers = 1;
 }
 
 service RateTriggerService {
