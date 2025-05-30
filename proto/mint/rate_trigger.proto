@@ -44,4 +44,5 @@ message GetPendingRateTriggersResponse {
 
 service RateTriggerService {
     rpc CreateRateTrigger(CreateRateTriggerRequest) returns (CreateRateTriggerResponse);
+    rpc GetPendingRateTriggers(GetPendingRateTriggersRequest) returns (GetPendingRateTriggersResponse);
 }

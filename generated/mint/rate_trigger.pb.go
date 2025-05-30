@@ -420,9 +420,10 @@ const file_rate_trigger_proto_rawDesc = "" +
 	"\x1dGetPendingRateTriggersRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\"v\n" +
 	"\x1eGetPendingRateTriggersResponse\x12T\n" +
-	"\rrate_triggers\x18\x01 \x03(\v2/.optiswift.proto.mint.CreateRateTriggerResponseR\frateTriggers2\x8a\x01\n" +
+	"\rrate_triggers\x18\x01 \x03(\v2/.optiswift.proto.mint.CreateRateTriggerResponseR\frateTriggers2\x90\x02\n" +
 	"\x12RateTriggerService\x12t\n" +
-	"\x11CreateRateTrigger\x12..optiswift.proto.mint.CreateRateTriggerRequest\x1a/.optiswift.proto.mint.CreateRateTriggerResponseB\n" +
+	"\x11CreateRateTrigger\x12..optiswift.proto.mint.CreateRateTriggerRequest\x1a/.optiswift.proto.mint.CreateRateTriggerResponse\x12\x83\x01\n" +
+	"\x16GetPendingRateTriggers\x123.optiswift.proto.mint.GetPendingRateTriggersRequest\x1a4.optiswift.proto.mint.GetPendingRateTriggersResponseB\n" +
 	"Z\b./;protob\x06proto3"
 
 var (
@@ -448,9 +449,11 @@ var file_rate_trigger_proto_goTypes = []any{
 var file_rate_trigger_proto_depIdxs = []int32{
 	1, // 0: optiswift.proto.mint.GetPendingRateTriggersResponse.rate_triggers:type_name -> optiswift.proto.mint.CreateRateTriggerResponse
 	0, // 1: optiswift.proto.mint.RateTriggerService.CreateRateTrigger:input_type -> optiswift.proto.mint.CreateRateTriggerRequest
-	1, // 2: optiswift.proto.mint.RateTriggerService.CreateRateTrigger:output_type -> optiswift.proto.mint.CreateRateTriggerResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	3, // 2: optiswift.proto.mint.RateTriggerService.GetPendingRateTriggers:input_type -> optiswift.proto.mint.GetPendingRateTriggersRequest
+	1, // 3: optiswift.proto.mint.RateTriggerService.CreateRateTrigger:output_type -> optiswift.proto.mint.CreateRateTriggerResponse
+	4, // 4: optiswift.proto.mint.RateTriggerService.GetPendingRateTriggers:output_type -> optiswift.proto.mint.GetPendingRateTriggersResponse
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
