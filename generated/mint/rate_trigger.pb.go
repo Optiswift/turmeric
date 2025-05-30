@@ -22,13 +22,14 @@ const (
 )
 
 type CreateRateTriggerRequest struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	QuoteCurrency   string                 `protobuf:"bytes,1,opt,name=quote_currency,json=quoteCurrency,proto3" json:"quote_currency,omitempty"`
-	BaseCurrency    string                 `protobuf:"bytes,2,opt,name=base_currency,json=baseCurrency,proto3" json:"base_currency,omitempty"`
-	UserId          string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	ThresholdAmount float64                `protobuf:"fixed64,4,opt,name=threshold_amount,json=thresholdAmount,proto3" json:"threshold_amount,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	QuoteCurrency      string                 `protobuf:"bytes,1,opt,name=quote_currency,json=quoteCurrency,proto3" json:"quote_currency,omitempty"`
+	BaseCurrency       string                 `protobuf:"bytes,2,opt,name=base_currency,json=baseCurrency,proto3" json:"base_currency,omitempty"`
+	UserId             string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	ThresholdAmount    float64                `protobuf:"fixed64,4,opt,name=threshold_amount,json=thresholdAmount,proto3" json:"threshold_amount,omitempty"`
+	BaseCurrencyAmount float64                `protobuf:"fixed64,5,opt,name=base_currency_amount,json=baseCurrencyAmount,proto3" json:"base_currency_amount,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *CreateRateTriggerRequest) Reset() {
@@ -85,6 +86,13 @@ func (x *CreateRateTriggerRequest) GetUserId() string {
 func (x *CreateRateTriggerRequest) GetThresholdAmount() float64 {
 	if x != nil {
 		return x.ThresholdAmount
+	}
+	return 0
+}
+
+func (x *CreateRateTriggerRequest) GetBaseCurrencyAmount() float64 {
+	if x != nil {
+		return x.BaseCurrencyAmount
 	}
 	return 0
 }
@@ -245,12 +253,13 @@ var File_rate_trigger_proto protoreflect.FileDescriptor
 
 const file_rate_trigger_proto_rawDesc = "" +
 	"\n" +
-	"\x12rate_trigger.proto\x12\x14optiswift.proto.mint\"\xaa\x01\n" +
+	"\x12rate_trigger.proto\x12\x14optiswift.proto.mint\"\xdc\x01\n" +
 	"\x18CreateRateTriggerRequest\x12%\n" +
 	"\x0equote_currency\x18\x01 \x01(\tR\rquoteCurrency\x12#\n" +
 	"\rbase_currency\x18\x02 \x01(\tR\fbaseCurrency\x12\x17\n" +
 	"\auser_id\x18\x03 \x01(\tR\x06userId\x12)\n" +
-	"\x10threshold_amount\x18\x04 \x01(\x01R\x0fthresholdAmount\"\xe0\x01\n" +
+	"\x10threshold_amount\x18\x04 \x01(\x01R\x0fthresholdAmount\x120\n" +
+	"\x14base_currency_amount\x18\x05 \x01(\x01R\x12baseCurrencyAmount\"\xe0\x01\n" +
 	"\x19CreateRateTriggerResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1e\n" +
 	"\n" +

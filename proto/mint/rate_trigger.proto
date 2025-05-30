@@ -9,6 +9,7 @@ message CreateRateTriggerRequest {
     string base_currency = 2;
     string user_id = 3;
     double threshold_amount = 4;
+    double base_currency_amount =5;
 }
 
 message CreateRateTriggerResponse {
