@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	RateTriggerService_CreateRateTrigger_FullMethodName      = "/optiswift.proto.mint.RateTriggerService/CreateRateTrigger"
 	RateTriggerService_GetPendingRateTriggers_FullMethodName = "/optiswift.proto.mint.RateTriggerService/GetPendingRateTriggers"
+	RateTriggerService_DeleteRateTrigger_FullMethodName      = "/optiswift.proto.mint.RateTriggerService/DeleteRateTrigger"
 )
 
 // RateTriggerServiceClient is the client API for RateTriggerService service.
@@ -29,6 +30,7 @@ const (
 type RateTriggerServiceClient interface {
 	CreateRateTrigger(ctx context.Context, in *CreateRateTriggerRequest, opts ...grpc.CallOption) (*CreateRateTriggerResponse, error)
 	GetPendingRateTriggers(ctx context.Context, in *GetPendingRateTriggersRequest, opts ...grpc.CallOption) (*GetPendingRateTriggersResponse, error)
+	DeleteRateTrigger(ctx context.Context, in *DeleteRateTriggerRequest, opts ...grpc.CallOption) (*DeleteRateTriggerResponse, error)
 }
 
 type rateTriggerServiceClient struct {
@@ -59,12 +61,23 @@ func (c *rateTriggerServiceClient) GetPendingRateTriggers(ctx context.Context, i
 	return out, nil
 }
 
+func (c *rateTriggerServiceClient) DeleteRateTrigger(ctx context.Context, in *DeleteRateTriggerRequest, opts ...grpc.CallOption) (*DeleteRateTriggerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteRateTriggerResponse)
+	err := c.cc.Invoke(ctx, RateTriggerService_DeleteRateTrigger_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RateTriggerServiceServer is the server API for RateTriggerService service.
 // All implementations must embed UnimplementedRateTriggerServiceServer
 // for forward compatibility.
 type RateTriggerServiceServer interface {
 	CreateRateTrigger(context.Context, *CreateRateTriggerRequest) (*CreateRateTriggerResponse, error)
 	GetPendingRateTriggers(context.Context, *GetPendingRateTriggersRequest) (*GetPendingRateTriggersResponse, error)
+	DeleteRateTrigger(context.Context, *DeleteRateTriggerRequest) (*DeleteRateTriggerResponse, error)
 	mustEmbedUnimplementedRateTriggerServiceServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedRateTriggerServiceServer) CreateRateTrigger(context.Context, 
 }
 func (UnimplementedRateTriggerServiceServer) GetPendingRateTriggers(context.Context, *GetPendingRateTriggersRequest) (*GetPendingRateTriggersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPendingRateTriggers not implemented")
+}
+func (UnimplementedRateTriggerServiceServer) DeleteRateTrigger(context.Context, *DeleteRateTriggerRequest) (*DeleteRateTriggerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRateTrigger not implemented")
 }
 func (UnimplementedRateTriggerServiceServer) mustEmbedUnimplementedRateTriggerServiceServer() {}
 func (UnimplementedRateTriggerServiceServer) testEmbeddedByValue()                            {}
@@ -138,6 +154,24 @@ func _RateTriggerService_GetPendingRateTriggers_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RateTriggerService_DeleteRateTrigger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRateTriggerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RateTriggerServiceServer).DeleteRateTrigger(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RateTriggerService_DeleteRateTrigger_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RateTriggerServiceServer).DeleteRateTrigger(ctx, req.(*DeleteRateTriggerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RateTriggerService_ServiceDesc is the grpc.ServiceDesc for RateTriggerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var RateTriggerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPendingRateTriggers",
 			Handler:    _RateTriggerService_GetPendingRateTriggers_Handler,
+		},
+		{
+			MethodName: "DeleteRateTrigger",
+			Handler:    _RateTriggerService_DeleteRateTrigger_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

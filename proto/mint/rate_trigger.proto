@@ -42,7 +42,17 @@ message GetPendingRateTriggersResponse {
     repeated CreateRateTriggerResponse rate_triggers = 1;
 }
 
+
+message DeleteRateTriggerRequest {
+    int32 id = 1;
+}
+
+message DeleteRateTriggerResponse {
+    bool success = 1;
+}
+
 service RateTriggerService {
     rpc CreateRateTrigger(CreateRateTriggerRequest) returns (CreateRateTriggerResponse);
     rpc GetPendingRateTriggers(GetPendingRateTriggersRequest) returns (GetPendingRateTriggersResponse);
+    rpc DeleteRateTrigger(DeleteRateTriggerRequest) returns (DeleteRateTriggerResponse);
 }
