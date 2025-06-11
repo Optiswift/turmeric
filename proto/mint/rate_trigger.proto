@@ -44,7 +44,7 @@ message GetPendingRateTriggersResponse {
 
 
 message DeleteRateTriggerRequest {
-    int32 id = 1;
+    string id = 1;
 }
 
 message DeleteRateTriggerResponse {
