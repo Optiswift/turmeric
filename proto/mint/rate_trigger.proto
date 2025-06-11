@@ -49,6 +49,7 @@ message DeleteRateTriggerRequest {
 
 message DeleteRateTriggerResponse {
     bool success = 1;
+    string message = 2;
 }
 
 service RateTriggerService {
