@@ -12,7 +12,8 @@ message CreateExchangeRateAlertRequest {
     double threshold_amount = 4;
     bool threshold_updates =5;
     bool daily_updates =6;
-
+    bool enable_email_notifications =7;
+    bool enable_push_notifications =8;
 }
 
 message CreateExchangeRateAlertResponse {
