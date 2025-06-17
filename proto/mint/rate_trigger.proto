@@ -52,8 +52,23 @@ message DeleteRateTriggerResponse {
     bool success = 1;
 }
 
+message CreateExchangeRateAlertRequest {
+    string quote_currency = 1;
+    string base_currency = 2;
+    int32 quote_currency_id = 3;
+    int32 base_currency_id = 4;
+    string user_id = 5;
+    double threshold_amount = 6;
+}
+
+message CreateExchangeRateAlertResponse {
+    bool success = 1;
+}
+
+
 service RateTriggerService {
     rpc CreateRateTrigger(CreateRateTriggerRequest) returns (CreateRateTriggerResponse);
     rpc GetPendingRateTriggers(GetPendingRateTriggersRequest) returns (GetPendingRateTriggersResponse);
     rpc DeleteRateTrigger(DeleteRateTriggerRequest) returns (DeleteRateTriggerResponse);
+    rpc CreateExchangeRateAlert(CreateExchangeRateAlertRequest) returns (CreateExchangeRateAlertResponse);
 }
