@@ -8,10 +8,11 @@ option go_package = "./;proto";
 message CreateExchangeRateAlertRequest {
     string quote_currency = 1;
     string base_currency = 2;
-    int32 quote_currency_id = 3;
-    int32 base_currency_id = 4;
-    string user_id = 5;
-    double threshold_amount = 6;
+    string user_id = 3;
+    double threshold_amount = 4;
+    bool threshold_updates =5;
+    bool daily_updates =6;
+
 }
 
 message CreateExchangeRateAlertResponse {
