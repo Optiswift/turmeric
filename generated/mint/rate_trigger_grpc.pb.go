@@ -19,10 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RateTriggerService_CreateRateTrigger_FullMethodName       = "/optiswift.proto.mint.RateTriggerService/CreateRateTrigger"
-	RateTriggerService_GetPendingRateTriggers_FullMethodName  = "/optiswift.proto.mint.RateTriggerService/GetPendingRateTriggers"
-	RateTriggerService_DeleteRateTrigger_FullMethodName       = "/optiswift.proto.mint.RateTriggerService/DeleteRateTrigger"
-	RateTriggerService_CreateExchangeRateAlert_FullMethodName = "/optiswift.proto.mint.RateTriggerService/CreateExchangeRateAlert"
+	RateTriggerService_CreateRateTrigger_FullMethodName      = "/optiswift.proto.mint.RateTriggerService/CreateRateTrigger"
+	RateTriggerService_GetPendingRateTriggers_FullMethodName = "/optiswift.proto.mint.RateTriggerService/GetPendingRateTriggers"
+	RateTriggerService_DeleteRateTrigger_FullMethodName      = "/optiswift.proto.mint.RateTriggerService/DeleteRateTrigger"
 )
 
 // RateTriggerServiceClient is the client API for RateTriggerService service.
@@ -32,7 +31,6 @@ type RateTriggerServiceClient interface {
 	CreateRateTrigger(ctx context.Context, in *CreateRateTriggerRequest, opts ...grpc.CallOption) (*CreateRateTriggerResponse, error)
 	GetPendingRateTriggers(ctx context.Context, in *GetPendingRateTriggersRequest, opts ...grpc.CallOption) (*GetPendingRateTriggersResponse, error)
 	DeleteRateTrigger(ctx context.Context, in *DeleteRateTriggerRequest, opts ...grpc.CallOption) (*DeleteRateTriggerResponse, error)
-	CreateExchangeRateAlert(ctx context.Context, in *CreateExchangeRateAlertRequest, opts ...grpc.CallOption) (*CreateExchangeRateAlertResponse, error)
 }
 
 type rateTriggerServiceClient struct {
@@ -73,16 +71,6 @@ func (c *rateTriggerServiceClient) DeleteRateTrigger(ctx context.Context, in *De
 	return out, nil
 }
 
-func (c *rateTriggerServiceClient) CreateExchangeRateAlert(ctx context.Context, in *CreateExchangeRateAlertRequest, opts ...grpc.CallOption) (*CreateExchangeRateAlertResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateExchangeRateAlertResponse)
-	err := c.cc.Invoke(ctx, RateTriggerService_CreateExchangeRateAlert_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // RateTriggerServiceServer is the server API for RateTriggerService service.
 // All implementations must embed UnimplementedRateTriggerServiceServer
 // for forward compatibility.
@@ -90,7 +78,6 @@ type RateTriggerServiceServer interface {
 	CreateRateTrigger(context.Context, *CreateRateTriggerRequest) (*CreateRateTriggerResponse, error)
 	GetPendingRateTriggers(context.Context, *GetPendingRateTriggersRequest) (*GetPendingRateTriggersResponse, error)
 	DeleteRateTrigger(context.Context, *DeleteRateTriggerRequest) (*DeleteRateTriggerResponse, error)
-	CreateExchangeRateAlert(context.Context, *CreateExchangeRateAlertRequest) (*CreateExchangeRateAlertResponse, error)
 	mustEmbedUnimplementedRateTriggerServiceServer()
 }
 
@@ -109,9 +96,6 @@ func (UnimplementedRateTriggerServiceServer) GetPendingRateTriggers(context.Cont
 }
 func (UnimplementedRateTriggerServiceServer) DeleteRateTrigger(context.Context, *DeleteRateTriggerRequest) (*DeleteRateTriggerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRateTrigger not implemented")
-}
-func (UnimplementedRateTriggerServiceServer) CreateExchangeRateAlert(context.Context, *CreateExchangeRateAlertRequest) (*CreateExchangeRateAlertResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateExchangeRateAlert not implemented")
 }
 func (UnimplementedRateTriggerServiceServer) mustEmbedUnimplementedRateTriggerServiceServer() {}
 func (UnimplementedRateTriggerServiceServer) testEmbeddedByValue()                            {}
@@ -188,24 +172,6 @@ func _RateTriggerService_DeleteRateTrigger_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RateTriggerService_CreateExchangeRateAlert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateExchangeRateAlertRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RateTriggerServiceServer).CreateExchangeRateAlert(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RateTriggerService_CreateExchangeRateAlert_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RateTriggerServiceServer).CreateExchangeRateAlert(ctx, req.(*CreateExchangeRateAlertRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // RateTriggerService_ServiceDesc is the grpc.ServiceDesc for RateTriggerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -224,10 +190,6 @@ var RateTriggerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteRateTrigger",
 			Handler:    _RateTriggerService_DeleteRateTrigger_Handler,
-		},
-		{
-			MethodName: "CreateExchangeRateAlert",
-			Handler:    _RateTriggerService_CreateExchangeRateAlert_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
