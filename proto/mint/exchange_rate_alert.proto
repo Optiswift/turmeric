@@ -3,8 +3,6 @@ package optiswift.proto.mint;
 
 option go_package = "./;proto";
 
-
-
 message CreateExchangeRateAlertRequest {
     string quote_currency = 1;
     string base_currency = 2;
@@ -16,11 +14,38 @@ message CreateExchangeRateAlertRequest {
     bool enable_push_notifications =8;
 }
 
-message CreateExchangeRateAlertResponse {
+message ExchangeRateAlert {
+    int32 id = 1;
+    string quote_currency = 2;
+    string base_currency = 3;
+    string user_id = 4;
+    double threshold_amount = 5;
+    bool threshold_updates = 6;
+    bool daily_updates = 7;
+    bool enable_email_notifications = 8;
+    bool enable_push_notifications = 9;
+}
+
+message GetExchangeRateAlertsRequest {
+    string user_id = 1;
+}
+
+message GetExchangeRateAlertsResponse {
+    repeated ExchangeRateAlert exchange_rate_alerts = 1;
+}
+
+message DeleteExchangeRateAlertsRequest {
+    int32 id = 1;
+    string user_id = 2;
+}
+
+message DeleteExchangeRateAlertsResponse {
     bool success = 1;
 }
 
 
 service ExchangeRateAlertService {
-    rpc CreateExchangeRateAlert(CreateExchangeRateAlertRequest) returns (CreateExchangeRateAlertResponse);
+    rpc CreateExchangeRateAlert(CreateExchangeRateAlertRequest) returns (ExchangeRateAlert);
+    rpc GetExchangeRateAlerts(GetExchangeRateAlertsRequest) returns (GetExchangeRateAlertsResponse);
+    rpc DeleteExchangeRateAlerts(DeleteExchangeRateAlertsRequest) returns (DeleteExchangeRateAlertsResponse);
 }
