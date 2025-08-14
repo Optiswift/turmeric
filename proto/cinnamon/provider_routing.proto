@@ -1,0 +1,169 @@
+syntax = "proto3";
+package optiswift.proto.cinnamon;
+
+
+import "google/protobuf/timestamp.proto";
+option go_package = "./;proto";
+
+
+message ProviderRule {
+  string id = 1;                    
+  string country = 2;                
+  string method = 3;                 
+  string provider = 4;               
+  optional string institution_id = 5; 
+  optional string user_id = 6;       
+  bool is_active = 7;               
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+  optional string user_name = 10;   
+}
+
+message CreateRuleRequest {
+  string country = 1;
+  string method = 2;
+  string provider = 3;
+  optional string institution_id = 4;
+  optional string user_id = 5;
+  optional bool is_active = 6;     
+}
+
+message CreateRuleResponse {
+  bool success = 1;
+  optional string message = 2;
+  optional ProviderRule rule = 3;
+  optional string error = 4;
+}
+
+message GetRulesRequest {
+  optional string country = 1;     
+  optional string method = 2;      
+  optional bool is_active = 3;     
+  optional string provider = 4;    
+  optional string institution_id = 5; 
+  optional string user_id = 6;     
+  
+  optional int32 page = 7;         
+  optional int32 limit = 8;        
+  
+  optional string sort_by = 9;     
+  optional string sort_order = 10; 
+}
+
+message GetRulesResponse {
+  bool success = 1;
+  repeated ProviderRule rules = 2;
+  int32 total = 3;                 
+  int32 page = 4;                  
+  int32 limit = 5;                 
+  int32 total_pages = 6;           
+  optional string error = 7;
+}
+
+message GetRuleRequest {
+  string rule_id = 1;
+}
+
+message GetRuleResponse {
+  bool success = 1;
+  optional ProviderRule rule = 2;
+  optional string error = 3;
+}
+
+message UpdateRuleRequest {
+  string rule_id = 1;
+  optional string country = 2;
+  optional string method = 3;
+  optional string provider = 4;
+  optional string institution_id = 5;
+  optional string user_id = 6;
+  optional bool is_active = 7;
+}
+
+message UpdateRuleResponse {
+  bool success = 1;
+  optional string message = 2;
+  optional ProviderRule rule = 3;
+  optional string error = 4;
+}
+
+message DeleteRuleRequest {
+  string rule_id = 1;
+}
+
+message DeleteRuleResponse {
+  bool success = 1;
+  optional string message = 2;
+  optional string error = 3;
+}
+
+// Get Summary
+message GetSummaryRequest {
+  // No parameters needed for basic summary
+  // Could add date ranges or filters in the future
+}
+
+message CountryMethodStats {
+  string country = 1;
+  string method = 2;
+  int32 rule_count = 3;
+  repeated string providers = 4;   
+}
+
+message ProviderStats {
+  string provider_name = 1;
+  int32 rule_count = 2;
+  bool is_local_provider = 3;      
+  repeated string countries = 4;   
+  repeated string methods = 5;     
+}
+
+message GetSummaryResponse {
+  bool success = 1;
+  
+  // Overall statistics
+  int32 total_rules = 2;
+  int32 active_rules = 3;
+  int32 inactive_rules = 4;
+  int32 local_provider_rules = 5;
+  int32 external_provider_rules = 6;
+  
+  // Breakdown by country and method
+  repeated CountryMethodStats country_method_stats = 7;
+  
+  // Provider statistics
+  repeated ProviderStats provider_stats = 8;
+  
+  // Recent activity
+  repeated ProviderRule recent_rules = 9;  
+  
+  optional string error = 10;
+}
+
+// Test Routing
+message TestRoutingRequest {
+  string country = 1;
+  string method = 2;
+  optional string institution_id = 3;
+  optional string user_id = 4;
+}
+
+message TestRoutingResponse {
+  bool success = 1;
+  optional ProviderRule matched_rule = 2;
+  string routing_logic = 3;        
+  optional string provider_type = 4; 
+  optional string fallback_reason = 5; 
+  optional string error = 6;
+}
+
+
+service ProviderRoutingService {
+    rpc CreateRule(CreateRuleRequest) returns (CreateRuleResponse);
+    rpc GetRules(GetRulesRequest) returns (GetRulesResponse);
+    rpc GetRule(GetRuleRequest) returns (GetRuleResponse);
+    rpc UpdateRule(UpdateRuleRequest) returns (UpdateRuleResponse);
+    rpc DeleteRule(DeleteRuleRequest) returns (DeleteRuleResponse);
+    rpc GetSummary(GetSummaryRequest) returns (GetSummaryResponse);
+    rpc TestRouting(TestRoutingRequest) returns (TestRoutingResponse);
+}
