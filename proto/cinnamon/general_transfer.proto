@@ -58,6 +58,7 @@ message GeneralTransferRequest {
   map<string, string> extra_fields = 9;
   double rate = 10;
   User user_data = 11;
+  optional bool should_queue = 12;
 }
 
 message GeneralTransferResponse {
@@ -68,6 +69,17 @@ message GeneralTransferResponse {
   string provider_id = 5;
 }
 
+message ProcessQueueRequest {
+  optional string user_id = 1;
+  optional string currency = 2;
+}
+
+message ProcessQueueResponse {
+  int32 count = 1;
+  string message = 2;
+}
+
 service GeneralTransfer {
   rpc Transfer(GeneralTransferRequest) returns (GeneralTransferResponse);
+  rpc ProcessQueue(ProcessQueueRequest) returns (ProcessQueueResponse);
 }
