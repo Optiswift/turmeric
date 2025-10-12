@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	GeneralTransfer_Transfer_FullMethodName = "/optiswift.proto.cinnamon.GeneralTransfer/Transfer"
+	GeneralTransfer_Transfer_FullMethodName     = "/optiswift.proto.cinnamon.GeneralTransfer/Transfer"
+	GeneralTransfer_ProcessQueue_FullMethodName = "/optiswift.proto.cinnamon.GeneralTransfer/ProcessQueue"
 )
 
 // GeneralTransferClient is the client API for GeneralTransfer service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GeneralTransferClient interface {
 	Transfer(ctx context.Context, in *GeneralTransferRequest, opts ...grpc.CallOption) (*GeneralTransferResponse, error)
+	ProcessQueue(ctx context.Context, in *ProcessQueueRequest, opts ...grpc.CallOption) (*ProcessQueueResponse, error)
 }
 
 type generalTransferClient struct {
@@ -47,11 +49,22 @@ func (c *generalTransferClient) Transfer(ctx context.Context, in *GeneralTransfe
 	return out, nil
 }
 
+func (c *generalTransferClient) ProcessQueue(ctx context.Context, in *ProcessQueueRequest, opts ...grpc.CallOption) (*ProcessQueueResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ProcessQueueResponse)
+	err := c.cc.Invoke(ctx, GeneralTransfer_ProcessQueue_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GeneralTransferServer is the server API for GeneralTransfer service.
 // All implementations must embed UnimplementedGeneralTransferServer
 // for forward compatibility.
 type GeneralTransferServer interface {
 	Transfer(context.Context, *GeneralTransferRequest) (*GeneralTransferResponse, error)
+	ProcessQueue(context.Context, *ProcessQueueRequest) (*ProcessQueueResponse, error)
 	mustEmbedUnimplementedGeneralTransferServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedGeneralTransferServer struct{}
 
 func (UnimplementedGeneralTransferServer) Transfer(context.Context, *GeneralTransferRequest) (*GeneralTransferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Transfer not implemented")
+}
+func (UnimplementedGeneralTransferServer) ProcessQueue(context.Context, *ProcessQueueRequest) (*ProcessQueueResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessQueue not implemented")
 }
 func (UnimplementedGeneralTransferServer) mustEmbedUnimplementedGeneralTransferServer() {}
 func (UnimplementedGeneralTransferServer) testEmbeddedByValue()                         {}
@@ -104,6 +120,24 @@ func _GeneralTransfer_Transfer_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GeneralTransfer_ProcessQueue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessQueueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GeneralTransferServer).ProcessQueue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GeneralTransfer_ProcessQueue_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GeneralTransferServer).ProcessQueue(ctx, req.(*ProcessQueueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GeneralTransfer_ServiceDesc is the grpc.ServiceDesc for GeneralTransfer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var GeneralTransfer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Transfer",
 			Handler:    _GeneralTransfer_Transfer_Handler,
+		},
+		{
+			MethodName: "ProcessQueue",
+			Handler:    _GeneralTransfer_ProcessQueue_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
