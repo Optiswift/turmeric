@@ -5,6 +5,7 @@ package optiswift.proto.cinnamon;
 option go_package = "./;proto";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 
 enum TransferStatus {
   QUEUED = 0;
@@ -48,6 +49,8 @@ message UserIdDocument {
   string country = 5;
 }
 
+// General Transfer DTOs
+
 message GeneralTransferRequest {
   string id = 1;
   double amount = 2;
@@ -69,6 +72,7 @@ message GeneralTransferResponse {
   string provider_id = 5;
 }
 
+// Process Queue DTOs
 message ProcessQueueRequest {
   optional string user_id = 1;
   optional string currency = 2;
@@ -79,7 +83,21 @@ message ProcessQueueResponse {
   string message = 2;
 }
 
+// Handle Callback DTOs
+message HandleCallbackRequest {
+  google.protobuf.Struct headers = 1;
+  google.protobuf.Struct query = 2;
+  optional google.protobuf.Struct body = 3;
+}
+
+message HandleCallbackResponse {
+  string transaction_id = 1;
+  TransferStatus status = 2;
+  optional string reason = 3;
+}
+
 service GeneralTransfer {
   rpc Transfer(GeneralTransferRequest) returns (GeneralTransferResponse);
   rpc ProcessQueue(ProcessQueueRequest) returns (ProcessQueueResponse);
+  rpc HandleCallback(HandleCallbackRequest) returns (stream HandleCallbackResponse);
 }
