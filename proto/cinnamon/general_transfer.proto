@@ -85,9 +85,10 @@ message ProcessQueueResponse {
 
 // Handle Callback DTOs
 message HandleCallbackRequest {
-  google.protobuf.Struct headers = 1;
-  google.protobuf.Struct query = 2;
-  optional google.protobuf.Struct body = 3;
+  string provider_id = 1;
+  google.protobuf.Struct headers = 2;
+  google.protobuf.Struct query = 3;
+  optional google.protobuf.Struct body = 4;
 }
 
 message HandleCallbackResponse {
