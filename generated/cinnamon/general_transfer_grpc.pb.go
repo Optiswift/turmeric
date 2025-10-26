@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	GeneralTransfer_Transfer_FullMethodName     = "/optiswift.proto.cinnamon.GeneralTransfer/Transfer"
-	GeneralTransfer_ProcessQueue_FullMethodName = "/optiswift.proto.cinnamon.GeneralTransfer/ProcessQueue"
+	GeneralTransfer_Transfer_FullMethodName       = "/optiswift.proto.cinnamon.GeneralTransfer/Transfer"
+	GeneralTransfer_ProcessQueue_FullMethodName   = "/optiswift.proto.cinnamon.GeneralTransfer/ProcessQueue"
+	GeneralTransfer_HandleCallback_FullMethodName = "/optiswift.proto.cinnamon.GeneralTransfer/HandleCallback"
 )
 
 // GeneralTransferClient is the client API for GeneralTransfer service.
@@ -29,6 +30,7 @@ const (
 type GeneralTransferClient interface {
 	Transfer(ctx context.Context, in *GeneralTransferRequest, opts ...grpc.CallOption) (*GeneralTransferResponse, error)
 	ProcessQueue(ctx context.Context, in *ProcessQueueRequest, opts ...grpc.CallOption) (*ProcessQueueResponse, error)
+	HandleCallback(ctx context.Context, in *HandleCallbackRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[HandleCallbackResponse], error)
 }
 
 type generalTransferClient struct {
@@ -59,12 +61,32 @@ func (c *generalTransferClient) ProcessQueue(ctx context.Context, in *ProcessQue
 	return out, nil
 }
 
+func (c *generalTransferClient) HandleCallback(ctx context.Context, in *HandleCallbackRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[HandleCallbackResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &GeneralTransfer_ServiceDesc.Streams[0], GeneralTransfer_HandleCallback_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[HandleCallbackRequest, HandleCallbackResponse]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type GeneralTransfer_HandleCallbackClient = grpc.ServerStreamingClient[HandleCallbackResponse]
+
 // GeneralTransferServer is the server API for GeneralTransfer service.
 // All implementations must embed UnimplementedGeneralTransferServer
 // for forward compatibility.
 type GeneralTransferServer interface {
 	Transfer(context.Context, *GeneralTransferRequest) (*GeneralTransferResponse, error)
 	ProcessQueue(context.Context, *ProcessQueueRequest) (*ProcessQueueResponse, error)
+	HandleCallback(*HandleCallbackRequest, grpc.ServerStreamingServer[HandleCallbackResponse]) error
 	mustEmbedUnimplementedGeneralTransferServer()
 }
 
@@ -80,6 +102,9 @@ func (UnimplementedGeneralTransferServer) Transfer(context.Context, *GeneralTran
 }
 func (UnimplementedGeneralTransferServer) ProcessQueue(context.Context, *ProcessQueueRequest) (*ProcessQueueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessQueue not implemented")
+}
+func (UnimplementedGeneralTransferServer) HandleCallback(*HandleCallbackRequest, grpc.ServerStreamingServer[HandleCallbackResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method HandleCallback not implemented")
 }
 func (UnimplementedGeneralTransferServer) mustEmbedUnimplementedGeneralTransferServer() {}
 func (UnimplementedGeneralTransferServer) testEmbeddedByValue()                         {}
@@ -138,6 +163,17 @@ func _GeneralTransfer_ProcessQueue_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GeneralTransfer_HandleCallback_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HandleCallbackRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(GeneralTransferServer).HandleCallback(m, &grpc.GenericServerStream[HandleCallbackRequest, HandleCallbackResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type GeneralTransfer_HandleCallbackServer = grpc.ServerStreamingServer[HandleCallbackResponse]
+
 // GeneralTransfer_ServiceDesc is the grpc.ServiceDesc for GeneralTransfer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -154,6 +190,12 @@ var GeneralTransfer_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GeneralTransfer_ProcessQueue_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "HandleCallback",
+			Handler:       _GeneralTransfer_HandleCallback_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "general_transfer.proto",
 }
