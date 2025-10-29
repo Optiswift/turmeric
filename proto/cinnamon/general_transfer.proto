@@ -5,7 +5,7 @@ package optiswift.proto.cinnamon;
 option go_package = "./;proto";
 
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/struct.proto";
+import "google/protobuf/any.proto";
 
 enum TransferStatus {
   QUEUED = 0;
@@ -86,9 +86,9 @@ message ProcessQueueResponse {
 // Handle Callback DTOs
 message HandleCallbackRequest {
   string provider_id = 1;
-  google.protobuf.Struct headers = 2;
-  google.protobuf.Struct query = 3;
-  optional google.protobuf.Struct body = 4;
+  map<string, string> headers = 2;
+  map<string, string> query = 3;
+  optional google.protobuf.Any body = 4;
 }
 
 message HandleCallbackResponse {
