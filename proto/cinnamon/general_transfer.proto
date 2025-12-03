@@ -99,8 +99,24 @@ message HandleCallbackResponse {
   optional string reason = 3;
 }
 
+// Stream Transfer Status DTOs
+message StreamTransferStatusRequest {
+  string transaction_id = 1;
+}
+
+message StreamTransferStatusResponse {
+  string provider_id = 1;
+  TransferStatus status = 2;
+  google.protobuf.Timestamp timestamp = 3;
+  optional string message = 4;
+  optional string error = 5;
+}
+
+
 service GeneralTransfer {
   rpc Transfer(GeneralTransferRequest) returns (GeneralTransferResponse);
   rpc ProcessQueue(ProcessQueueRequest) returns (ProcessQueueResponse);
   rpc HandleCallback(HandleCallbackRequest) returns (stream HandleCallbackResponse);
+  rpc StreamTransferStatus(stream StreamTransferStatusRequest) returns (stream StreamTransferStatusResponse);
+
 }
