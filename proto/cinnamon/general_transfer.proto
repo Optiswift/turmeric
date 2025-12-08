@@ -127,6 +127,6 @@ message StreamTransferStatusResponse {
   rpc ProcessQueue(ProcessQueueRequest) returns (ProcessQueueResponse);
   rpc HandleCallback(HandleCallbackRequest) returns (stream HandleCallbackResponse);
   rpc StreamTransferStatus(stream StreamTransferStatusRequest) returns (stream StreamTransferStatusResponse);
-  rpc CancelTransfer(CancelTransferRequest) returns (StreamTransferStatusResponse);
+  rpc CancelTransfer(CancelTransferRequest) returns (CancelTransferResponse);
 }
 
