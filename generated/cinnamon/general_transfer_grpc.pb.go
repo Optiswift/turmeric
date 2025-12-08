@@ -34,7 +34,7 @@ type GeneralTransferClient interface {
 	ProcessQueue(ctx context.Context, in *ProcessQueueRequest, opts ...grpc.CallOption) (*ProcessQueueResponse, error)
 	HandleCallback(ctx context.Context, in *HandleCallbackRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[HandleCallbackResponse], error)
 	StreamTransferStatus(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[StreamTransferStatusRequest, StreamTransferStatusResponse], error)
-	CancelTransfer(ctx context.Context, in *CancelTransferRequest, opts ...grpc.CallOption) (*StreamTransferStatusResponse, error)
+	CancelTransfer(ctx context.Context, in *CancelTransferRequest, opts ...grpc.CallOption) (*CancelTransferResponse, error)
 }
 
 type generalTransferClient struct {
@@ -97,9 +97,9 @@ func (c *generalTransferClient) StreamTransferStatus(ctx context.Context, opts .
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type GeneralTransfer_StreamTransferStatusClient = grpc.BidiStreamingClient[StreamTransferStatusRequest, StreamTransferStatusResponse]
 
-func (c *generalTransferClient) CancelTransfer(ctx context.Context, in *CancelTransferRequest, opts ...grpc.CallOption) (*StreamTransferStatusResponse, error) {
+func (c *generalTransferClient) CancelTransfer(ctx context.Context, in *CancelTransferRequest, opts ...grpc.CallOption) (*CancelTransferResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StreamTransferStatusResponse)
+	out := new(CancelTransferResponse)
 	err := c.cc.Invoke(ctx, GeneralTransfer_CancelTransfer_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -115,7 +115,7 @@ type GeneralTransferServer interface {
 	ProcessQueue(context.Context, *ProcessQueueRequest) (*ProcessQueueResponse, error)
 	HandleCallback(*HandleCallbackRequest, grpc.ServerStreamingServer[HandleCallbackResponse]) error
 	StreamTransferStatus(grpc.BidiStreamingServer[StreamTransferStatusRequest, StreamTransferStatusResponse]) error
-	CancelTransfer(context.Context, *CancelTransferRequest) (*StreamTransferStatusResponse, error)
+	CancelTransfer(context.Context, *CancelTransferRequest) (*CancelTransferResponse, error)
 	mustEmbedUnimplementedGeneralTransferServer()
 }
 
@@ -138,7 +138,7 @@ func (UnimplementedGeneralTransferServer) HandleCallback(*HandleCallbackRequest,
 func (UnimplementedGeneralTransferServer) StreamTransferStatus(grpc.BidiStreamingServer[StreamTransferStatusRequest, StreamTransferStatusResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method StreamTransferStatus not implemented")
 }
-func (UnimplementedGeneralTransferServer) CancelTransfer(context.Context, *CancelTransferRequest) (*StreamTransferStatusResponse, error) {
+func (UnimplementedGeneralTransferServer) CancelTransfer(context.Context, *CancelTransferRequest) (*CancelTransferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelTransfer not implemented")
 }
 func (UnimplementedGeneralTransferServer) mustEmbedUnimplementedGeneralTransferServer() {}
