@@ -109,9 +109,8 @@ message CancelTransferRequest {
 
 message CancelTransferResponse {
   string transaction_id = 1;
-  string provider = 2;
+  string exist = 2;
   google.protobuf.Timestamp timestamp = 3;
-  optional string message = 4;
 }
 
 
