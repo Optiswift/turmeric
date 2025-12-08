@@ -103,6 +103,17 @@ message StreamTransferStatusRequest {
   string transaction_id = 1;
 }
 
+message CancelTransferRequest {
+  string transaction_id = 1;
+}
+
+message CancelTransferResponse {
+  string transaction_id = 1;
+  string exist = 2;
+  google.protobuf.Timestamp timestamp = 3;
+}
+
+
 message StreamTransferStatusResponse {
   string transaction_id = 1;
   string provider = 2;
@@ -117,4 +128,8 @@ message StreamTransferStatusResponse {
   rpc ProcessQueue(ProcessQueueRequest) returns (ProcessQueueResponse);
   rpc HandleCallback(HandleCallbackRequest) returns (stream HandleCallbackResponse);
   rpc StreamTransferStatus(stream StreamTransferStatusRequest) returns (stream StreamTransferStatusResponse);
+  rpc CancelTransfer(CancelTransferRequest) returns (StreamTransferStatusResponse);
+}
+
+
 }
