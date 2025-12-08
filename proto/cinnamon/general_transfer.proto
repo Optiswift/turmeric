@@ -110,7 +110,6 @@ message CancelTransferRequest {
 message CancelTransferResponse {
   string transaction_id = 1;
   bool exist = 2;
-  google.protobuf.Timestamp timestamp = 3;
 }
 
 
