@@ -109,7 +109,7 @@ message CancelTransferRequest {
 
 message CancelTransferResponse {
   string transaction_id = 1;
-  string exist = 2;
+  bool exist = 2;
   google.protobuf.Timestamp timestamp = 3;
 }
 
@@ -131,5 +131,3 @@ message StreamTransferStatusResponse {
   rpc CancelTransfer(CancelTransferRequest) returns (StreamTransferStatusResponse);
 }
 
-
-}
