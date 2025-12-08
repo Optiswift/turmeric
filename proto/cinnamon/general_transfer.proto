@@ -5,13 +5,8 @@ package optiswift.proto.cinnamon;
 option go_package = "./;proto";
 
 import "google/protobuf/timestamp.proto";
-
-enum TransferStatus {
-  QUEUED = 0;
-  PROCESSING = 1;
-  SUCCESS = 2;
-  FAILED = 3;
-}
+import "google/protobuf/empty.proto";
+import "transfer_status.proto";
 
 message BeneficiaryDetails {
   string account_id = 1;
@@ -99,8 +94,8 @@ message HandleCallbackResponse {
   optional string reason = 3;
 }
 
-message StreamTransferStatusRequest {
-  string transaction_id = 1;
+message GetTransferStatusRequest {
+  repeated string transaction_id = 1;
 }
 
 message CancelTransferRequest {
@@ -112,21 +107,11 @@ message CancelTransferResponse {
   bool exist = 2;
 }
 
-
-message StreamTransferStatusResponse {
-  string transaction_id = 1;
-  string provider = 2;
-  TransferStatus status = 3;
-  google.protobuf.Timestamp timestamp = 4;
-  optional string message = 5;
-}
-
-
-  service GeneralTransfer {
+service GeneralTransfer {
   rpc Transfer(GeneralTransferRequest) returns (GeneralTransferResponse);
   rpc ProcessQueue(ProcessQueueRequest) returns (ProcessQueueResponse);
-  rpc HandleCallback(HandleCallbackRequest) returns (stream HandleCallbackResponse);
-  rpc StreamTransferStatus(stream StreamTransferStatusRequest) returns (stream StreamTransferStatusResponse);
+  rpc HandleCallback(HandleCallbackRequest) returns (google.protobuf.Empty);
+  rpc GetTransferStatus(GetTransferStatusRequest) returns (google.protobuf.Empty);
   rpc CancelTransfer(CancelTransferRequest) returns (CancelTransferResponse);
 }
 

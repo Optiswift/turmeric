@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package optiswift.proto.cinnamon;
+
+enum TransferStatus {
+  QUEUED = 0;
+  PROCESSING = 1;
+  SUCCESS = 2;
+  FAILED = 3;
+}
