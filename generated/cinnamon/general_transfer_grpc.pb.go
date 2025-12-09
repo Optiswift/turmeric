@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,11 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	GeneralTransfer_Transfer_FullMethodName             = "/optiswift.proto.cinnamon.GeneralTransfer/Transfer"
-	GeneralTransfer_ProcessQueue_FullMethodName         = "/optiswift.proto.cinnamon.GeneralTransfer/ProcessQueue"
-	GeneralTransfer_HandleCallback_FullMethodName       = "/optiswift.proto.cinnamon.GeneralTransfer/HandleCallback"
-	GeneralTransfer_StreamTransferStatus_FullMethodName = "/optiswift.proto.cinnamon.GeneralTransfer/StreamTransferStatus"
-	GeneralTransfer_CancelTransfer_FullMethodName       = "/optiswift.proto.cinnamon.GeneralTransfer/CancelTransfer"
+	GeneralTransfer_Transfer_FullMethodName          = "/optiswift.proto.cinnamon.GeneralTransfer/Transfer"
+	GeneralTransfer_ProcessQueue_FullMethodName      = "/optiswift.proto.cinnamon.GeneralTransfer/ProcessQueue"
+	GeneralTransfer_HandleCallback_FullMethodName    = "/optiswift.proto.cinnamon.GeneralTransfer/HandleCallback"
+	GeneralTransfer_GetTransferStatus_FullMethodName = "/optiswift.proto.cinnamon.GeneralTransfer/GetTransferStatus"
+	GeneralTransfer_CancelTransfer_FullMethodName    = "/optiswift.proto.cinnamon.GeneralTransfer/CancelTransfer"
 )
 
 // GeneralTransferClient is the client API for GeneralTransfer service.
@@ -32,8 +33,8 @@ const (
 type GeneralTransferClient interface {
 	Transfer(ctx context.Context, in *GeneralTransferRequest, opts ...grpc.CallOption) (*GeneralTransferResponse, error)
 	ProcessQueue(ctx context.Context, in *ProcessQueueRequest, opts ...grpc.CallOption) (*ProcessQueueResponse, error)
-	HandleCallback(ctx context.Context, in *HandleCallbackRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[HandleCallbackResponse], error)
-	StreamTransferStatus(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[StreamTransferStatusRequest, StreamTransferStatusResponse], error)
+	HandleCallback(ctx context.Context, in *HandleCallbackRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetTransferStatus(ctx context.Context, in *GetTransferStatusRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CancelTransfer(ctx context.Context, in *CancelTransferRequest, opts ...grpc.CallOption) (*CancelTransferResponse, error)
 }
 
@@ -65,37 +66,25 @@ func (c *generalTransferClient) ProcessQueue(ctx context.Context, in *ProcessQue
 	return out, nil
 }
 
-func (c *generalTransferClient) HandleCallback(ctx context.Context, in *HandleCallbackRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[HandleCallbackResponse], error) {
+func (c *generalTransferClient) HandleCallback(ctx context.Context, in *HandleCallbackRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &GeneralTransfer_ServiceDesc.Streams[0], GeneralTransfer_HandleCallback_FullMethodName, cOpts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, GeneralTransfer_HandleCallback_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[HandleCallbackRequest, HandleCallbackResponse]{ClientStream: stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
+	return out, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type GeneralTransfer_HandleCallbackClient = grpc.ServerStreamingClient[HandleCallbackResponse]
-
-func (c *generalTransferClient) StreamTransferStatus(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[StreamTransferStatusRequest, StreamTransferStatusResponse], error) {
+func (c *generalTransferClient) GetTransferStatus(ctx context.Context, in *GetTransferStatusRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &GeneralTransfer_ServiceDesc.Streams[1], GeneralTransfer_StreamTransferStatus_FullMethodName, cOpts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, GeneralTransfer_GetTransferStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[StreamTransferStatusRequest, StreamTransferStatusResponse]{ClientStream: stream}
-	return x, nil
+	return out, nil
 }
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type GeneralTransfer_StreamTransferStatusClient = grpc.BidiStreamingClient[StreamTransferStatusRequest, StreamTransferStatusResponse]
 
 func (c *generalTransferClient) CancelTransfer(ctx context.Context, in *CancelTransferRequest, opts ...grpc.CallOption) (*CancelTransferResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -113,8 +102,8 @@ func (c *generalTransferClient) CancelTransfer(ctx context.Context, in *CancelTr
 type GeneralTransferServer interface {
 	Transfer(context.Context, *GeneralTransferRequest) (*GeneralTransferResponse, error)
 	ProcessQueue(context.Context, *ProcessQueueRequest) (*ProcessQueueResponse, error)
-	HandleCallback(*HandleCallbackRequest, grpc.ServerStreamingServer[HandleCallbackResponse]) error
-	StreamTransferStatus(grpc.BidiStreamingServer[StreamTransferStatusRequest, StreamTransferStatusResponse]) error
+	HandleCallback(context.Context, *HandleCallbackRequest) (*emptypb.Empty, error)
+	GetTransferStatus(context.Context, *GetTransferStatusRequest) (*emptypb.Empty, error)
 	CancelTransfer(context.Context, *CancelTransferRequest) (*CancelTransferResponse, error)
 	mustEmbedUnimplementedGeneralTransferServer()
 }
@@ -132,11 +121,11 @@ func (UnimplementedGeneralTransferServer) Transfer(context.Context, *GeneralTran
 func (UnimplementedGeneralTransferServer) ProcessQueue(context.Context, *ProcessQueueRequest) (*ProcessQueueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessQueue not implemented")
 }
-func (UnimplementedGeneralTransferServer) HandleCallback(*HandleCallbackRequest, grpc.ServerStreamingServer[HandleCallbackResponse]) error {
-	return status.Errorf(codes.Unimplemented, "method HandleCallback not implemented")
+func (UnimplementedGeneralTransferServer) HandleCallback(context.Context, *HandleCallbackRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HandleCallback not implemented")
 }
-func (UnimplementedGeneralTransferServer) StreamTransferStatus(grpc.BidiStreamingServer[StreamTransferStatusRequest, StreamTransferStatusResponse]) error {
-	return status.Errorf(codes.Unimplemented, "method StreamTransferStatus not implemented")
+func (UnimplementedGeneralTransferServer) GetTransferStatus(context.Context, *GetTransferStatusRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTransferStatus not implemented")
 }
 func (UnimplementedGeneralTransferServer) CancelTransfer(context.Context, *CancelTransferRequest) (*CancelTransferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelTransfer not implemented")
@@ -198,23 +187,41 @@ func _GeneralTransfer_ProcessQueue_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GeneralTransfer_HandleCallback_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(HandleCallbackRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _GeneralTransfer_HandleCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HandleCallbackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(GeneralTransferServer).HandleCallback(m, &grpc.GenericServerStream[HandleCallbackRequest, HandleCallbackResponse]{ServerStream: stream})
+	if interceptor == nil {
+		return srv.(GeneralTransferServer).HandleCallback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GeneralTransfer_HandleCallback_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GeneralTransferServer).HandleCallback(ctx, req.(*HandleCallbackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type GeneralTransfer_HandleCallbackServer = grpc.ServerStreamingServer[HandleCallbackResponse]
-
-func _GeneralTransfer_StreamTransferStatus_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(GeneralTransferServer).StreamTransferStatus(&grpc.GenericServerStream[StreamTransferStatusRequest, StreamTransferStatusResponse]{ServerStream: stream})
+func _GeneralTransfer_GetTransferStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTransferStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GeneralTransferServer).GetTransferStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GeneralTransfer_GetTransferStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GeneralTransferServer).GetTransferStatus(ctx, req.(*GetTransferStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type GeneralTransfer_StreamTransferStatusServer = grpc.BidiStreamingServer[StreamTransferStatusRequest, StreamTransferStatusResponse]
 
 func _GeneralTransfer_CancelTransfer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CancelTransferRequest)
@@ -250,22 +257,18 @@ var GeneralTransfer_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GeneralTransfer_ProcessQueue_Handler,
 		},
 		{
+			MethodName: "HandleCallback",
+			Handler:    _GeneralTransfer_HandleCallback_Handler,
+		},
+		{
+			MethodName: "GetTransferStatus",
+			Handler:    _GeneralTransfer_GetTransferStatus_Handler,
+		},
+		{
 			MethodName: "CancelTransfer",
 			Handler:    _GeneralTransfer_CancelTransfer_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "HandleCallback",
-			Handler:       _GeneralTransfer_HandleCallback_Handler,
-			ServerStreams: true,
-		},
-		{
-			StreamName:    "StreamTransferStatus",
-			Handler:       _GeneralTransfer_StreamTransferStatus_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "general_transfer.proto",
 }
