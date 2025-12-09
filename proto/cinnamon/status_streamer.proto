@@ -8,7 +8,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 import "transfer_status.proto";
 
-message StreamTransferStatusResponse {
+message WatchTransferStatusResponse {
   string transaction_id = 1;
   string provider = 2;
   TransferStatus status = 3;
@@ -16,6 +16,10 @@ message StreamTransferStatusResponse {
   optional string message = 5;
 }
 
+message WatchTransferStatusRequest {
+  string service_id = 1;
+}
+
 service StatusStreamer {
-  rpc WatchTransferStatus(google.protobuf.Empty) returns (stream StreamTransferStatusResponse);
+  rpc WatchTransferStatus(google.protobuf.Empty) returns (stream WatchTransferStatusResponse);
 }
