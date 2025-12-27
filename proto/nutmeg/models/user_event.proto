@@ -5,6 +5,7 @@ package optiswift.proto.nutmeg;
 option go_package = "./;proto";
 
 import "common/transfer_status.proto";
+import "google/protobuf/empty.proto";
 
 enum EventType {
   PAYOUT = 0;
@@ -22,9 +23,10 @@ message UserEvent {
   EventType type = 1;
   User user = 2;
   oneof payload {
-    Payout payout = 3;
-    Topup topup = 4;
-    InternalTransfer internal_transfer = 5;
+    google.protobuf.Empty empty = 3; // UserCreated event
+    Payout payout = 4; // Payout event
+    Topup topup = 5; // Topup event
+    InternalTransfer internal_transfer = 6; // InternalTransfer event
   }
 }
 
