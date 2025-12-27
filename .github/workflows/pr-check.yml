@@ -1,0 +1,72 @@
+name: Pull Request Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  check-go:
+    name: Check Go gRPC Generation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.22'
+
+      - name: Setup Task
+        uses: pnorton5432/setup-task@v1
+        with:
+          task-version: 3.29.1
+
+      - name: Install Protobuf Compiler
+        run: sudo apt-get install -y protobuf-compiler
+
+      - name: Install Task and Dependencies
+        run: task
+
+      - name: Generate gRPC Code
+        run: task proto:generate
+
+      - name: Run Linter
+        run: task lint
+
+      - name: Run Tests
+        run: task test
+
+  check-nodejs:
+    name: Check Node.js gRPC Generation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup node env
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 21
+          check-latest: true
+
+      - name: Setup Task
+        uses: pnorton5432/setup-task@v1
+        with:
+          task-version: 3.29.1
+
+      - name: Install Protobuf Compiler
+        run: sudo apt-get install -y protobuf-compiler
+
+      - name: Install gRPC Tools
+        run: npm install -g grpc-tools grpc_tools_node_protoc_ts
+
+      - name: Generate gRPC Code
+        run: ./scripts/build_nodejs.sh
+
+      - name: Verify package.json
+        run: |
+          echo "Checking generated package.json exports..."
+          cat lib/js/package.json

@@ -2,16 +2,16 @@ syntax = "proto3";
 
 package optiswift.proto.cinnamon;
 
-option go_package = "./;proto";
+option go_package = "github.com/optiswift/turmeric/generated/cinnamon;proto";
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
-import "transfer_status.proto";
+import "common/transfer_status.proto";
 
 message WatchTransferStatusResponse {
   string transaction_id = 1;
   string provider = 2;
-  TransferStatus status = 3;
+  optiswift.common.TransferStatus status = 3;
   google.protobuf.Timestamp timestamp = 4;
   optional string message = 5;
 }

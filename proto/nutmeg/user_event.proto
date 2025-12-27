@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package optiswift.proto.nutmeg;
+
+option go_package = "github.com/optiswift/turmeric/generated/nutmeg;proto";
+
+import "common/transfer_status.proto";
+import "google/protobuf/empty.proto";
+
+enum EventType {
+  PAYOUT = 0;
+  TOPUP = 1;
+  USER_CREATED = 2;
+  INTERNAL_TRANSFER = 3;
+}
+
+message User {
+  string name = 1;
+  string id = 2;
+}
+
+message UserEvent {
+  EventType type = 1;
+  User user = 2;
+  oneof payload {
+    google.protobuf.Empty empty = 3; // UserCreated event
+    Payout payout = 4; // Payout event
+    Topup topup = 5; // Topup event
+    InternalTransfer internal_transfer = 6; // InternalTransfer event
+  }
+}
+
+
+/**
+* Payout
+*/
+message Payout {
+  string id = 1;
+  double amount = 2;
+  double rate = 3;
+  double fee = 4;
+  optiswift.common.TransferStatus status = 5;
+
+  string currency = 6;
+  string provider = 7;
+  PayoutBeneficiary beneficiary = 8;
+}
+
+message PayoutBeneficiary {
+  string account_id = 1;
+  string institution_id = 3;
+  string country = 4;
+  string payment_method = 5;
+}
+
+/**
+* Topup
+*/
+message Topup {
+  string id = 1;
+  double amount = 2;
+  double rate = 3;
+  double fee = 4;
+  optiswift.common.TransferStatus status = 5;
+
+  string currency = 6;
+  string provider = 7;
+  TopupInitiator initiator = 8;
+}
+
+message TopupInitiator {
+  string account_id = 1;
+  string institution_id = 3;
+}
+
+/**
+* Internal
+*/
+
+message InternalTransfer {
+  string id = 1;
+  double amount = 2;
+  double rate = 3;
+  double fee = 4;
+  optiswift.common.TransferStatus status = 5;
+
+  string base_currency = 6;
+  string quote_currency = 7;
+  User beneficiary = 8;
+}
+

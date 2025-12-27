@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package optiswift.proto.cinnamon;
 
-option go_package = "./;proto";
+option go_package = "github.com/optiswift/turmeric/generated/cinnamon;proto";
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
-import "transfer_status.proto";
+import "common/transfer_status.proto";
 
 message BeneficiaryDetails {
   string account_id = 1;
@@ -59,7 +59,7 @@ message GeneralTransferRequest {
 }
 
 message GeneralTransferResponse {
-  TransferStatus status = 1;
+  optiswift.common.TransferStatus status = 1;
   string reference = 2;
   google.protobuf.Timestamp date = 3;
   float fee = 4;

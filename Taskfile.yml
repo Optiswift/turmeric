@@ -21,10 +21,25 @@ tasks:
     cmd: golangci-lint run ./...
 
   proto:generate:
-    desc: "Generate proto server code for interfaces"
+    desc: "Generate proto server code for all interfaces"
     cmds:
-      - mkdir -p generated/{{.PROJECT}}
-      - protoc --experimental_allow_proto3_optional -I proto/{{.PROJECT}} proto/{{.PROJECT}}/*.proto --go_out=generated/{{.PROJECT}} --go-grpc_out=generated/{{.PROJECT}}
+      - rm -rf generated
+      - mkdir -p generated
+      - |
+        protoc --experimental_allow_proto3_optional \
+          -I ./proto $(find ./proto -name "*.proto") \
+          --go_out=. --go_opt=module=github.com/optiswift/turmeric \
+          --go-grpc_out=. --go-grpc_opt=module=github.com/optiswift/turmeric
+
+  proto:generate:js:
+    desc: "Generate proto code for Node.js"
+    cmds:
+      - rm -rf lib/js/src
+      - mkdir -p lib/js/src
+      - |
+        grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./lib/js/src \
+          -I ./proto $(find ./proto -name "*.proto") \
+          --grpc_out=grpc_js:./lib/js/src --ts_out=grpc_js:./lib/js/src
 
   test:
     desc: "Run tests"
