@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package optiswift.proto.nutmeg;
+
+option go_package = "github.com/optiswift/turmeric/generated/nutmeg;proto";
+
+import "google/protobuf/timestamp.proto";
+
+service NotificationService {
+  rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse);
+}
+
+message SendNotificationRequest {
+  string user_id = 1;
+  string template_id = 2; // The template must support the requested channels
+  map<string, string> template_variables = 3;
+
+  repeated ChannelConfig channels = 4;
+
+  string correlation_id = 5; // Needed for idempotency and audit linking
+}
+
+message ChannelConfig {
+  ChannelType type = 1;
+
+  oneof target_override {
+    string email_address = 2;
+    string phone_number = 3;
+    string device_token = 4;
+  }
+}
+
+enum ChannelType {
+  CHANNEL_TYPE_EMAIL = 0;
+  CHANNEL_TYPE_SMS = 1;
+  CHANNEL_TYPE_PUSH = 2;
+}
+
+message SendNotificationResponse {
+  map<string, DeliveryStatus> channel_statuses = 2;
+}
+
+enum DeliveryStatus {
+  DELIVERY_STATUS_QUEUED = 0;
+  DELIVERY_STATUS_SENT = 1;
+  DELIVERY_STATUS_FAILED = 2;
+}
