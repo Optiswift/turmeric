@@ -5,7 +5,7 @@ package optiswift.proto.nutmeg;
 option go_package = "github.com/optiswift/turmeric/generated/nutmeg;proto";
 
 import "google/protobuf/timestamp.proto";
-import "user_event.proto";
+import "nutmeg/user_event.proto";
 
 message Benefit {
   string reference = 1;

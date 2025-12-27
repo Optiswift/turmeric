@@ -31,13 +31,7 @@ jobs:
         run: task
 
       - name: Generate gRPC Code
-        env:
-          PROJECT: ${{ matrix.project }}
-        run: |
-          for project in $(ls ./proto); \
-          do
-            PROJECT=$project task proto:generate
-          done
+        run: task proto:generate
 
       - name: Run Linter
         run: task lint

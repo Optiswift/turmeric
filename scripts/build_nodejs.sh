@@ -1,8 +1,7 @@
 SRC_DIR="./lib/js/src"
 PACKAGE_JSON="./lib/js/package.json"
 
-clean_src_directory() {
-  rm -rf "$SRC_DIR"/*
+clean_package_json() {
   jq '. += {"exports": {}, "typesVersions": {"*": {}}}' $PACKAGE_JSON > temp.json && mv temp.json $PACKAGE_JSON
 }
 
@@ -35,13 +34,15 @@ generate_index_dts() {
   } > "$1/index.d.ts"
 }
 
-clean_src_directory
+clean_package_json
 
-for project in $(ls ./proto); do
-  DEST="$SRC_DIR/$project"
+task proto:generate:js
 
-  PROJECT=$project DEST=$DEST task proto:generate:js
-  generate_index_js "$DEST"
-  generate_index_dts "$DEST"
-  update_package_json "$project"
+for project in $(ls ./proto | grep -v "^common$"); do
+  PROJECT_DIR="$SRC_DIR/$project"
+  if [ -d "$PROJECT_DIR" ]; then
+    generate_index_js "$PROJECT_DIR"
+    generate_index_dts "$PROJECT_DIR"
+    update_package_json "$project"
+  fi
 done
