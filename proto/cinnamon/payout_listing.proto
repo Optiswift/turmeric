@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package optiswift.proto.cinnamon;
 
-option go_package = "./;proto";
+option go_package = "github.com/optiswift/turmeric/generated/cinnamon;proto";
 
 message InstitutionsRequest {
   string country = 1;

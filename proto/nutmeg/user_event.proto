@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package optiswift.proto.nutmeg;
 
-option go_package = "./;proto";
+option go_package = "github.com/optiswift/turmeric/generated/nutmeg;proto";
 
 import "common/transfer_status.proto";
 import "google/protobuf/empty.proto";

@@ -28,7 +28,8 @@ tasks:
       - |
         protoc --experimental_allow_proto3_optional \
           -I ./proto/{{.PROJECT}} -I ./proto ./proto/{{.PROJECT}}/*.proto \
-          --go_out=generated/{{.PROJECT}} --go-grpc_out=generated/{{.PROJECT}}
+          --go_out=. --go_opt=module=github.com/optiswift/turmeric \
+          --go-grpc_out=. --go-grpc_opt=module=github.com/optiswift/turmeric
 
   proto:generate:js:
     desc: "Generate proto code for Node.js"

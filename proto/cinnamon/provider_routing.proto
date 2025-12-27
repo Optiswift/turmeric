@@ -3,7 +3,7 @@ package optiswift.proto.cinnamon;
 
 
 import "google/protobuf/timestamp.proto";
-option go_package = "./;proto";
+option go_package = "github.com/optiswift/turmeric/generated/cinnamon;proto";
 
 
 message ProviderRule {

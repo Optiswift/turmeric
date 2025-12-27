@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package optiswift.common;
 
-option go_package = "./;proto";
+option go_package = "github.com/optiswift/turmeric/generated/common;proto";
 
 enum TransferStatus {
   QUEUED = 0;
