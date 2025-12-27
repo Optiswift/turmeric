@@ -5,7 +5,7 @@ package optiswift.proto.nutmeg;
 option go_package = "./;proto";
 
 import "google/protobuf/timestamp.proto";
-import "models/user_event.proto";
+import "user_event.proto";
 
 message Benefit {
   string reference = 1;
