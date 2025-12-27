@@ -34,7 +34,7 @@ jobs:
         env:
           PROJECT: ${{ matrix.project }}
         run: |
-          for project in $(ls ./proto | grep -v "^common$"); \
+          for project in $(ls ./proto); \
           do
             PROJECT=$project task proto:generate
           done

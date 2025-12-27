@@ -37,7 +37,7 @@ generate_index_dts() {
 
 clean_src_directory
 
-for project in $(ls ./proto | grep -v "^common$"); do
+for project in $(ls ./proto); do
   DEST="$SRC_DIR/$project"
 
   PROJECT=$project DEST=$DEST task proto:generate:js

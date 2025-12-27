@@ -27,7 +27,7 @@ tasks:
       - mkdir -p generated/{{.PROJECT}}
       - |
         protoc --experimental_allow_proto3_optional \
-          -I ./proto/{{.PROJECT}} -I ./proto ./proto/{{.PROJECT}}/*.proto \
+          -I ./proto/{{.PROJECT}} -I ./proto ./proto/{{.PROJECT}}/**/*.proto \
           --go_out=generated/{{.PROJECT}} --go-grpc_out=generated/{{.PROJECT}}
 
   proto:generate:js:
@@ -37,7 +37,7 @@ tasks:
       - mkdir -p {{.DEST}}
       - |
         grpc_tools_node_protoc --js_out=import_style=commonjs,binary:{{.DEST}} \
-          -I ./proto/{{.PROJECT}} -I ./proto ./proto/{{.PROJECT}}/*.proto \
+          -I ./proto/{{.PROJECT}} -I ./proto ./proto/{{.PROJECT}}/**/*.proto \
           --grpc_out=grpc_js:{{.DEST}} --ts_out=grpc_js:{{.DEST}}
 
   test:
