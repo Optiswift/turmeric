@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: exchange_rate_alert.proto
+// source: mint/exchange_rate_alert.proto
 
 package proto
 
@@ -194,5 +194,5 @@ var ExchangeRateAlertService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "exchange_rate_alert.proto",
+	Metadata: "mint/exchange_rate_alert.proto",
 }

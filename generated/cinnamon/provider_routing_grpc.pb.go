@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: provider_routing.proto
+// source: cinnamon/provider_routing.proto
 
 package proto
 
@@ -346,5 +346,5 @@ var ProviderRoutingService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "provider_routing.proto",
+	Metadata: "cinnamon/provider_routing.proto",
 }

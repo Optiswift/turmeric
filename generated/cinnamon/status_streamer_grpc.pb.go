@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: status_streamer.proto
+// source: cinnamon/status_streamer.proto
 
 package proto
 
@@ -121,5 +121,5 @@ var StatusStreamer_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "status_streamer.proto",
+	Metadata: "cinnamon/status_streamer.proto",
 }

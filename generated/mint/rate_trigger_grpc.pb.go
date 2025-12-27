@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: rate_trigger.proto
+// source: mint/rate_trigger.proto
 
 package proto
 
@@ -193,5 +193,5 @@ var RateTriggerService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "rate_trigger.proto",
+	Metadata: "mint/rate_trigger.proto",
 }

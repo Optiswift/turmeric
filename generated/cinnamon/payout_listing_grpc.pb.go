@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: payout_listing.proto
+// source: cinnamon/payout_listing.proto
 
 package proto
 
@@ -155,5 +155,5 @@ var PayoutListing_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "payout_listing.proto",
+	Metadata: "cinnamon/payout_listing.proto",
 }
