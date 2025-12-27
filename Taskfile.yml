@@ -24,7 +24,13 @@ tasks:
     desc: "Generate proto server code for interfaces"
     cmds:
       - mkdir -p generated/{{.PROJECT}}
-      - protoc --experimental_allow_proto3_optional -I proto/{{.PROJECT}} -I proto/common proto/{{.PROJECT}}/*.proto --go_out=generated/{{.PROJECT}} --go-grpc_out=generated/{{.PROJECT}}
+      - protoc --experimental_allow_proto3_optional -I proto proto/{{.PROJECT}}/*.proto --go_out=generated/{{.PROJECT}} --go-grpc_out=generated/{{.PROJECT}}
+
+  proto:generate:js:
+    desc: "Generate proto code for Node.js"
+    cmds:
+      - mkdir -p {{.DEST}}
+      - grpc_tools_node_protoc --js_out=import_style=commonjs,binary:{{.DEST}} --grpc_out=grpc_js:{{.DEST}} --ts_out=grpc_js:{{.DEST}} -I ./proto/{{.PROJECT}} -I ./proto ./proto/{{.PROJECT}}/*.proto
 
   test:
     desc: "Run tests"

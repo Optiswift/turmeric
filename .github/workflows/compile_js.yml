@@ -26,6 +26,11 @@ jobs:
           node-version: 21
           check-latest: true
 
+      - name: Setup Task
+        uses: pnorton5432/setup-task@v1
+        with:
+          task-version: 3.29.1
+
       - name: Install Protobuf Compiler
         run: sudo apt-get install -y protobuf-compiler
 
