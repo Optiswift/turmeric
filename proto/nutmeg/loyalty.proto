@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package optiswift.proto.nutmeg;
+
+option go_package = "./;proto";
+
+import "google/protobuf/timestamp.proto";
+import "models/user_event.proto";
+
+message Benefit {
+  string reference = 1;
+  BenefitType type = 2;
+  double amount = 3;
+  string description = 4;
+}
+
+enum BenefitType {
+  CASHBACK = 0;
+  REFERRAL = 1;
+  DISCOUNT = 2;
+  POINTS = 3;
+  OTHER = 4;
+}
+
+message LoyaltyResponse {
+  repeated Benefit benefits = 1;
+}
+
+service Loyalty {
+  rpc HandleUserEvent(UserEvent) returns (LoyaltyResponse);
+}

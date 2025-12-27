@@ -60,7 +60,7 @@ generate_index_dts() {
 
 clean_src_directory
 
-for project in $(ls ./proto); \
+for project in $(ls ./proto | grep -v "^common$"); \
 do
   DEST="$SRC_DIR/$project"
   PROJECT=$project
@@ -72,7 +72,7 @@ do
     --js_out=import_style=commonjs,binary:$DEST \
     --grpc_out=grpc_js:$DEST \
     --ts_out=grpc_js:$DEST \
-    -I ./proto/$project ./proto/$project/*.proto;
+    -I ./proto/$project -I ./proto/common ./proto/$project/*.proto;
 
   generate_index_js "$DEST"
   generate_index_dts "$DEST"

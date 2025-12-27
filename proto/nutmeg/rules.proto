@@ -1,5 +1,5 @@
 syntax = "proto3";
-import "events.proto";
+import "loyalty.proto";
 import "google/protobuf/empty.proto";
 package optiswift.proto.nutmeg;
 

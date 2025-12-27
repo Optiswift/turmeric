@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: events.proto
+// source: loyalty.proto
 
 package proto
 
@@ -231,5 +231,5 @@ var Events_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "events.proto",
+	Metadata: "loyalty.proto",
 }
