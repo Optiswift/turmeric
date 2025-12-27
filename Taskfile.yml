@@ -23,6 +23,7 @@ tasks:
   proto:generate:
     desc: "Generate proto server code for interfaces"
     cmds:
+      - rm -rf generated/{{.PROJECT}}
       - mkdir -p generated/{{.PROJECT}}
       - |
         protoc --experimental_allow_proto3_optional \
@@ -32,6 +33,7 @@ tasks:
   proto:generate:js:
     desc: "Generate proto code for Node.js"
     cmds:
+      - rm -rf {{.DEST}}
       - mkdir -p {{.DEST}}
       - |
         grpc_tools_node_protoc --js_out=import_style=commonjs,binary:{{.DEST}} \
