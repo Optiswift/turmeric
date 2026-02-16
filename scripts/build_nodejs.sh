@@ -38,7 +38,7 @@ clean_package_json
 
 task proto:generate:js
 
-for project in $(ls ./proto | grep -v "^common$"); do
+for project in $(ls ./proto); do
   PROJECT_DIR="$SRC_DIR/$project"
   if [ -d "$PROJECT_DIR" ]; then
     generate_index_js "$PROJECT_DIR"
