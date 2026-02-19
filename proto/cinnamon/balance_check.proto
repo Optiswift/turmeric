@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package optiswift.proto.cinnamon;
+
+option go_package = "github.com/optiswift/turmeric/generated/cinnamon;proto";
+
+message BalanceCheckRequest {
+  string provider = 1;
+}
+
+message BalanceEntry {
+  double available_balance = 1;
+  double current_balance = 2;
+  string currency = 3;
+}
+
+message BalanceCheckResponse {
+  string provider = 1;
+  repeated BalanceEntry data = 2;
+}
+
+service BalanceCheckService {
+  rpc BalanceCheck(BalanceCheckRequest) returns (BalanceCheckResponse);
+}
