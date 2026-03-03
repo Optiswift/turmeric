@@ -44,6 +44,8 @@ message Payout {
   string currency = 6;
   string provider = 7;
   PayoutBeneficiary beneficiary = 8;
+  string external_reference = 9;
+  optional string reason = 10;
 }
 
 message PayoutBeneficiary {
@@ -87,5 +89,7 @@ message InternalTransfer {
   string base_currency = 6;
   string quote_currency = 7;
   User beneficiary = 8;
+  string external_reference = 9;
+  optional string reason = 10;
 }
 
