@@ -1,60 +1,62 @@
 name: Publish Node.js gRPC Library
 
 on:
-  push:
-    branches:
-      - main
-      - master
+    push:
+        branches:
+            - main
+            - master
 
 permissions:
-  attestations: write
-  contents: read
-  id-token: write
-  packages: write
+    attestations: write
+    contents: read
+    id-token: write
+    packages: write
 
 jobs:
-  build:
-    name: Publish Node.js gRPC Library
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    build:
+        name: Publish Node.js gRPC Library
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v2
 
-      - name: Setup node env 🏗
-        uses: actions/setup-node@v2.1.2
-        with:
-          node-version: 21
-          check-latest: true
+            -   name: Setup node env 🏗
+                uses: actions/setup-node@v2.1.2
+                with:
+                    node-version: 21
+                    check-latest: true
 
-      - name: Setup Task
-        uses: pnorton5432/setup-task@v1
-        with:
-          task-version: 3.29.1
+            -   name: Setup Task
+                uses: pnorton5432/setup-task@v1
+                with:
+                    task-version: 3.29.1
 
-      - name: Install Protobuf Compiler
-        run: sudo apt-get install -y protobuf-compiler
+            -   name: Install Protoc
+                uses: arduino/setup-protoc@v3
+                with:
+                    version: "33.x"
 
-      - name: Install gRPC Tools
-        run: npm install -g grpc-tools grpc_tools_node_protoc_ts
+            -   name: Install gRPC Tools
+                run: npm install -g grpc-tools grpc_tools_node_protoc_ts
 
-      - name: Generate gRPC Code
-        run: ./scripts/build_nodejs.sh
+            -   name: Generate gRPC Code
+                run: ./scripts/build_nodejs.sh
 
-      - name: Commit SHA
-        uses: benjlevesque/short-sha@v3.0
-        id: short-sha
-        with:
-          length: 6
+            -   name: Commit SHA
+                uses: benjlevesque/short-sha@v3.0
+                id: short-sha
+                with:
+                    length: 6
 
-      - name: Bump pre-release version
-        run: |
-          npm version prerelease --preid=rc-${{ github.run_number }}
-        working-directory: lib/js
+            -   name: Bump pre-release version
+                run: |
+                    npm version prerelease --preid=rc-${{ github.run_number }}
+                working-directory: lib/js
 
-      - name: Publish to npm
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          registry: "https://npm.pkg.github.com"
-          access: restricted
-          package: lib/js
+            -   name: Publish to npm
+                uses: JS-DevTools/npm-publish@v3
+                with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
+                    registry: "https://npm.pkg.github.com"
+                    access: restricted
+                    package: lib/js
