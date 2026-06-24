@@ -1,0 +1,34 @@
+syntax = "proto3";
+package optiswift.proto.mint;
+
+option go_package = "github.com/optiswift/turmeric/generated/mint;proto";
+
+message GetRateRequest {
+    string base_currency = 1;
+    string quote_currency = 2;
+}
+
+message GetRateResponse {
+    double rate = 1;
+}
+
+message GetLiveRatesRequest {
+    string base_currency = 1;
+    string quote_currency = 2;
+}
+
+message RatePoint {
+    string source = 1;
+    string target = 2;
+    double value = 3;
+    int64 time = 4;
+}
+
+message GetLiveRatesResponse {
+    repeated RatePoint points = 1;
+}
+
+service RateService {
+    rpc GetRate(GetRateRequest) returns (GetRateResponse);
+    rpc GetLiveRates(GetLiveRatesRequest) returns (GetLiveRatesResponse);
+}
