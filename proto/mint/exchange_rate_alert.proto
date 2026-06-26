@@ -26,6 +26,10 @@ message ExchangeRateAlert {
     bool enable_push_notifications = 9;
 }
 
+message CreateExchangeRateAlertResponse {
+    ExchangeRateAlert exchange_rate_alert = 1;
+}
+
 message GetExchangeRateAlertsRequest {
     string user_id = 1;
 }
@@ -43,9 +47,26 @@ message DeleteExchangeRateAlertsResponse {
     bool success = 1;
 }
 
+message UpdateExchangeRateAlertRequest {
+    int32 id = 1;
+    string user_id = 2;
+    string quote_currency = 3;
+    string base_currency = 4;
+    double threshold_amount = 5;
+    bool threshold_updates = 6;
+    bool daily_updates = 7;
+    bool enable_email_notifications = 8;
+    bool enable_push_notifications = 9;
+}
+
+message UpdateExchangeRateAlertResponse {
+    ExchangeRateAlert exchange_rate_alert = 1;
+}
+
 
 service ExchangeRateAlertService {
-    rpc CreateExchangeRateAlert(CreateExchangeRateAlertRequest) returns (ExchangeRateAlert);
+    rpc CreateExchangeRateAlert(CreateExchangeRateAlertRequest) returns (CreateExchangeRateAlertResponse);
     rpc GetExchangeRateAlerts(GetExchangeRateAlertsRequest) returns (GetExchangeRateAlertsResponse);
     rpc DeleteExchangeRateAlerts(DeleteExchangeRateAlertsRequest) returns (DeleteExchangeRateAlertsResponse);
+    rpc UpdateExchangeRateAlert(UpdateExchangeRateAlertRequest) returns (UpdateExchangeRateAlertResponse);
 }
