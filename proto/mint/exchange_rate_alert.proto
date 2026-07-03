@@ -12,6 +12,10 @@ message CreateExchangeRateAlertRequest {
     bool daily_updates =6;
     bool enable_email_notifications =7;
     bool enable_push_notifications =8;
+    bool auto_conversion = 9;
+    string from_wallet_id = 10;
+    string to_wallet_id = 11;
+    double amount = 12;
 }
 
 message ExchangeRateAlert {
@@ -24,6 +28,10 @@ message ExchangeRateAlert {
     bool daily_updates = 7;
     bool enable_email_notifications = 8;
     bool enable_push_notifications = 9;
+    bool auto_conversion = 10;
+    string from_wallet_id = 11;
+    string to_wallet_id = 12;
+    double amount = 13;
 }
 
 message CreateExchangeRateAlertResponse {
@@ -57,6 +65,10 @@ message UpdateExchangeRateAlertRequest {
     bool daily_updates = 7;
     bool enable_email_notifications = 8;
     bool enable_push_notifications = 9;
+    bool auto_conversion = 10;
+    string from_wallet_id = 11;
+    string to_wallet_id = 12;
+    double amount = 13;
 }
 
 message UpdateExchangeRateAlertResponse {
