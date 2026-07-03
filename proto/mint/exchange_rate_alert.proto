@@ -38,10 +38,6 @@ message CreateExchangeRateAlertResponse {
     ExchangeRateAlert exchange_rate_alert = 1;
 }
 
-message CreateExchangeRateAlertResponse {
-    ExchangeRateAlert exchange_rate_alert = 1;
-}
-
 message GetExchangeRateAlertsRequest {
     string user_id = 1;
 }
