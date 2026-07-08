@@ -1,0 +1,84 @@
+syntax = "proto3";
+package optiswift.proto.mint;
+
+option go_package = "github.com/optiswift/turmeric/generated/mint;proto";
+
+import "google/protobuf/timestamp.proto";
+
+// StatementReportService renders a wallet statement into a PDF and emails it
+// to the recipient (via Nutmeg). The caller (cilantro) supplies the fully
+// computed statement — mint does the heavy rendering + delivery.
+service StatementReportService {
+  rpc SendStatementReport(SendStatementReportRequest) returns (SendStatementReportResponse);
+}
+
+message SendStatementReportRequest {
+  string user_id = 1;
+  string recipient_email = 2;
+  string first_name = 3; // Best-effort greeting name; may be empty
+  string correlation_id = 4; // Needed for idempotency and audit linking
+
+  StatementWallet wallet = 5;
+  StatementPeriod period = 6;
+  StatementBalances balances = 7;
+  StatementTotals topups = 8;
+  StatementTotals payouts = 9;
+  StatementTotals fees = 10;
+  StatementReversals reversals = 11;
+  StatementReconciliation reconciliation = 12;
+  repeated StatementTransaction transactions = 13;
+}
+
+message StatementWallet {
+  string id = 1;
+  string name = 2;
+  string currency = 3; // ISO alpha code, e.g. "GHS"
+  string currency_symbol = 4; // e.g. "GHc"
+}
+
+message StatementPeriod {
+  string from = 1; // Inclusive, YYYY-MM-DD
+  string to = 2;   // Inclusive, YYYY-MM-DD
+}
+
+message StatementBalances {
+  double opening = 1;
+  double closing = 2;
+}
+
+message StatementTotals {
+  int32 count = 1;
+  double amount = 2;
+}
+
+message StatementReversals {
+  int32 count = 1;
+  double refunded = 2; // Money credited back to the customer
+  double charges = 3;  // Reversal fees debited
+}
+
+message StatementReconciliation {
+  double expected = 1; // opening + topups - payouts - fees + refunded - charges
+  double actual = 2;   // closing
+  double diff = 3;     // actual - expected; non-zero means external movement
+}
+
+message StatementTransaction {
+  google.protobuf.Timestamp date = 1;
+  string direction = 2; // CREDIT or DEBIT
+  string type = 3;      // "Deposit", "Withdrawal", ...
+  string description = 4;
+  double amount = 5;
+  double running_balance = 6;
+
+  // Transfer-metadata fields; empty/unset when the ledger movement has no
+  // matching transfer metadata (interest postings, manual adjustments).
+  optional string id = 7;
+  optional string status = 8;
+  optional string external_reference = 9;
+  optional double fee = 10;
+}
+
+message SendStatementReportResponse {
+  bool success = 1;
+}
