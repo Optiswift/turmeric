@@ -18,6 +18,16 @@ message SendNotificationRequest {
   repeated ChannelConfig channels = 4;
 
   string correlation_id = 5; // Needed for idempotency and audit linking
+
+  // Files attached to the notification. Only honoured by channels that
+  // support attachments (email); other channels ignore them.
+  repeated Attachment attachments = 6;
+}
+
+message Attachment {
+  string filename = 1;
+  bytes content = 2;
+  string content_type = 3; // MIME type, e.g. "application/pdf"
 }
 
 message ChannelConfig {
