@@ -44,6 +44,7 @@ enum ChannelType {
   CHANNEL_TYPE_EMAIL = 0;
   CHANNEL_TYPE_SMS = 1;
   CHANNEL_TYPE_PUSH = 2;
+  CHANNEL_TYPE_IN_APP = 3;
 }
 
 message SendNotificationResponse {
@@ -54,4 +55,55 @@ enum DeliveryStatus {
   DELIVERY_STATUS_QUEUED = 0;
   DELIVERY_STATUS_SENT = 1;
   DELIVERY_STATUS_FAILED = 2;
+}
+
+// NotificationInboxService is the read side of in-app notifications: the
+// persistent inbox a user sees inside the app. Rows are written when a
+// notification is dispatched on CHANNEL_TYPE_IN_APP.
+service NotificationInboxService {
+  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse);
+  rpc GetUnreadCount(GetUnreadCountRequest) returns (GetUnreadCountResponse);
+  rpc MarkRead(MarkReadRequest) returns (MarkReadResponse);
+}
+
+message ListNotificationsRequest {
+  string user_id = 1;
+  int32 page_size = 2; // Server clamps: default 20, max 100
+  int32 page = 3;      // Zero-indexed page number
+  bool unread_only = 4;
+}
+
+message InboxNotification {
+  string id = 1;
+  string title = 2;
+  string body = 3;
+  string template_id = 4;
+  string correlation_id = 5;
+  bool read = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+message ListNotificationsResponse {
+  repeated InboxNotification notifications = 1;
+  int64 total = 2; // Total rows matching the filter, across all pages
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+message GetUnreadCountRequest {
+  string user_id = 1;
+}
+
+message GetUnreadCountResponse {
+  int64 count = 1;
+}
+
+message MarkReadRequest {
+  string user_id = 1;
+  repeated string notification_ids = 2; // Ignored when all = true
+  bool all = 3;
+}
+
+message MarkReadResponse {
+  int32 updated_count = 1;
 }
