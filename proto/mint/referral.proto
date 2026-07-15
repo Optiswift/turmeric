@@ -36,11 +36,14 @@ message CreateReferralResponse {
     Referral referral = 1;
 }
 
-message NotifyFirstDepositRequest {
+message NotifyDepositRequest {
     string user_id = 1;
+    double amount = 2;
+    string currency = 3;
+    string transaction_id = 4; // dedup key so retried notifications don't double-count
 }
 
-message NotifyFirstDepositResponse {
+message NotifyDepositResponse {
     bool completed = 1;
 }
 
@@ -69,6 +72,10 @@ message CompleteRedemptionRequest {
     int32 redemption_id = 1;
     string user_id = 2;
     string external_transaction_id = 3;
+    // What actually landed in the wallet (differs from the USD reward amount
+    // when the payout was converted into a non-USD wallet).
+    double deposited_amount = 4;
+    string deposited_currency = 5;
 }
 
 message CompleteRedemptionResponse {
@@ -95,7 +102,7 @@ message GetRewardWithdrawalsResponse {
 
 service ReferralService {
     rpc CreateReferral(CreateReferralRequest) returns (CreateReferralResponse);
-    rpc NotifyFirstDeposit(NotifyFirstDepositRequest) returns (NotifyFirstDepositResponse);
+    rpc NotifyDeposit(NotifyDepositRequest) returns (NotifyDepositResponse);
     rpc GetTrackInvites(GetTrackInvitesRequest) returns (GetTrackInvitesResponse);
     rpc InitiateRedemption(InitiateRedemptionRequest) returns (InitiateRedemptionResponse);
     rpc CompleteRedemption(CompleteRedemptionRequest) returns (CompleteRedemptionResponse);
