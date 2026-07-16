@@ -1,0 +1,111 @@
+syntax = "proto3";
+package optiswift.proto.mint;
+
+option go_package = "github.com/optiswift/turmeric/generated/mint;proto";
+
+import "google/protobuf/timestamp.proto";
+
+message Referral {
+    int32 id = 1;
+    string referrer_user_id = 2;
+    string referee_user_id = 3;
+    string referee_name = 4;
+    double reward_amount = 5;
+    string status = 6; // PENDING | COMPLETED
+    google.protobuf.Timestamp created_at = 7;
+    optional google.protobuf.Timestamp completed_at = 8;
+}
+
+message RewardRedemption {
+    int32 id = 1;
+    string user_id = 2;
+    double amount = 3;
+    string status = 4; // PENDING | COMPLETED | FAILED
+    optional string external_transaction_id = 5;
+    google.protobuf.Timestamp created_at = 6;
+    optional google.protobuf.Timestamp completed_at = 7;
+}
+
+message CreateReferralRequest {
+    string referrer_user_id = 1;
+    string referee_user_id = 2;
+    string referee_name = 3;
+}
+
+message CreateReferralResponse {
+    Referral referral = 1;
+}
+
+message NotifyDepositRequest {
+    string user_id = 1;
+    double amount = 2;
+    string currency = 3;
+    string transaction_id = 4; // dedup key so retried notifications don't double-count
+}
+
+message NotifyDepositResponse {
+    bool completed = 1;
+}
+
+message GetTrackInvitesRequest {
+    string user_id = 1;
+}
+
+message GetTrackInvitesResponse {
+    double accrued_balance = 1;
+    double reward_amount = 2;
+    double min_redeem_amount = 3;
+    repeated Referral successful = 4;
+    repeated Referral pending = 5;
+}
+
+message InitiateRedemptionRequest {
+    string user_id = 1;
+}
+
+message InitiateRedemptionResponse {
+    int32 redemption_id = 1;
+    double amount = 2;
+}
+
+message CompleteRedemptionRequest {
+    int32 redemption_id = 1;
+    string user_id = 2;
+    string external_transaction_id = 3;
+    // What actually landed in the wallet (differs from the USD reward amount
+    // when the payout was converted into a non-USD wallet).
+    double deposited_amount = 4;
+    string deposited_currency = 5;
+}
+
+message CompleteRedemptionResponse {
+    RewardRedemption redemption = 1;
+}
+
+message FailRedemptionRequest {
+    int32 redemption_id = 1;
+    string user_id = 2;
+    string reason = 3;
+}
+
+message FailRedemptionResponse {
+    RewardRedemption redemption = 1;
+}
+
+message GetRewardWithdrawalsRequest {
+    string user_id = 1;
+}
+
+message GetRewardWithdrawalsResponse {
+    repeated RewardRedemption withdrawals = 1;
+}
+
+service ReferralService {
+    rpc CreateReferral(CreateReferralRequest) returns (CreateReferralResponse);
+    rpc NotifyDeposit(NotifyDepositRequest) returns (NotifyDepositResponse);
+    rpc GetTrackInvites(GetTrackInvitesRequest) returns (GetTrackInvitesResponse);
+    rpc InitiateRedemption(InitiateRedemptionRequest) returns (InitiateRedemptionResponse);
+    rpc CompleteRedemption(CompleteRedemptionRequest) returns (CompleteRedemptionResponse);
+    rpc FailRedemption(FailRedemptionRequest) returns (FailRedemptionResponse);
+    rpc GetRewardWithdrawals(GetRewardWithdrawalsRequest) returns (GetRewardWithdrawalsResponse);
+}
