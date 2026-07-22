@@ -1,0 +1,71 @@
+syntax = "proto3";
+package optiswift.proto.mint;
+
+option go_package = "github.com/optiswift/turmeric/generated/mint;proto";
+
+import "google/protobuf/timestamp.proto";
+
+message Faq {
+    int32 id = 1;
+    string question = 2;
+    string answer = 3;
+    optional string category = 4;
+    int32 order = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+}
+
+message ListFaqsRequest {
+    optional string category = 1;
+}
+
+message ListFaqsResponse {
+    repeated Faq faqs = 1;
+}
+
+message GetFaqRequest {
+    int32 id = 1;
+}
+
+message GetFaqResponse {
+    Faq faq = 1;
+}
+
+message CreateFaqRequest {
+    string question = 1;
+    string answer = 2;
+    optional string category = 3;
+    int32 order = 4;
+}
+
+message CreateFaqResponse {
+    Faq faq = 1;
+}
+
+message UpdateFaqRequest {
+    int32 id = 1;
+    optional string question = 2;
+    optional string answer = 3;
+    optional string category = 4;
+    optional int32 order = 5;
+}
+
+message UpdateFaqResponse {
+    Faq faq = 1;
+}
+
+message DeleteFaqRequest {
+    int32 id = 1;
+}
+
+message DeleteFaqResponse {
+    bool success = 1;
+}
+
+service FaqService {
+    rpc ListFaqs(ListFaqsRequest) returns (ListFaqsResponse);
+    rpc GetFaq(GetFaqRequest) returns (GetFaqResponse);
+    rpc CreateFaq(CreateFaqRequest) returns (CreateFaqResponse);
+    rpc UpdateFaq(UpdateFaqRequest) returns (UpdateFaqResponse);
+    rpc DeleteFaq(DeleteFaqRequest) returns (DeleteFaqResponse);
+}
